@@ -5,10 +5,13 @@ description: >-
   charts for dark-mode screens, tech dashboards, or large-screen data visualization systems (数据可视化大屏).
   Applies to Vue, React, HTML/JS ECharts implementations requiring high-texture dark theme aesthetics,
   high Data-Ink ratio, gradient fills, and responsive container resizing.
+author: 小狼阿亮, wuyax
 allowed-tools: Read, Glob, Grep
 ---
 
 # 大屏数据可视化 Skill (Screen Data Visualization)
+
+> **作者**: 小狼阿亮、wuyax
 
 基于 **「群青」官方设计规范** 与 **Edward Tufte 高数据墨水比 (Data-Ink Ratio)** 理念打造。用于指导 Agent 生成具备**顶级视觉质感**、**高对比度冷感沉浸**、**响应式自适应**的大屏 ECharts 5 / 6+ 图表。
 

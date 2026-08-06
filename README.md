@@ -96,6 +96,13 @@ data-vis-skill/
 
 ---
 
+## 👥 作者 (Authors)
+
+- **小狼阿亮**
+- **wuyax**
+
+---
+
 ## 📄 许可协议 (License)
 
 [MIT License](LICENSE)
