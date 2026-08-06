@@ -28,7 +28,7 @@
 推荐使用 `skills` CLI 工具直接一键安装本 Skill（Git 仓库形式）：
 
 ```bash
-npx skills add https://github.com/wuyax/data-vis-skill.git
+npx skills add https://github.com/wuyax/styling-data-viz.git
 ```
 
 ---
@@ -36,7 +36,7 @@ npx skills add https://github.com/wuyax/data-vis-skill.git
 ## 📂 目录结构 (Directory Structure)
 
 ```text
-data-vis-skill/
+styling-data-viz/
 ├── SKILL.md                         # Skill 入口指令与多风格 Agent 核心调度规则
 ├── README.md                        # 项目说明文档
 ├── skills-lock.json                 # Skill 依赖与锁定配置
