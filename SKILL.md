@@ -115,8 +115,8 @@ flowchart TD
   1. 用户明确提示需“科技全息”、“斜纹发光质感”、“高级细节”或“赛博朋克”视觉风格。
   2. 大屏核心核心指示器、单柱/单折线重点 Hero 图表。
 - **避免场景**：5 系列以上密集型数据柱图、常规多折线对比图（使用单层 `LinearGradient` 即可，避免画面过度杂乱或产生视觉噪音）。
-- **技术实现**：
-  - **底层 (Base Series)**：低透明度 `LinearGradient` 颜色渐变，提供柔和衬底。
+- **技术实现与边框要求**：
+  - **底层 (Base Series)**：低透明度 `LinearGradient` 颜色渐变，提供柔和衬底。**必须配置与系列同调性/高亮色一致的外边框 (`borderWidth: 1 ~ 1.5` 与 `borderColor: '<系列发光主色>'`)**，用清晰硬朗的轮廓线条勾勒出图表结构。
   - **顶层 (Stripe Series)**：`barGap: '-100%'` 或重叠面积层，配合 `bgColor: 'transparent'` 的斜条纹 Pattern（详见 [`rules/general/stripe-texture-and-gradients.md`](rules/general/stripe-texture-and-gradients.md) 与 [`references/stripePattern.ts`](references/stripePattern.ts)）。
 
 ---

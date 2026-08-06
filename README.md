@@ -74,12 +74,14 @@ import { createStripePattern } from './references/stripePattern';
 
 const option = {
   series: [
-    // 1. 底层：发光渐变柱体
+    // 1. 底层：发光渐变柱体（配置系列同色发光边框勾勒结构）
     {
       name: '数据量',
       type: 'bar',
       barWidth: '40%',
       itemStyle: {
+        borderWidth: 1.5,
+        borderColor: '#12adfd',
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           { offset: 0, color: 'rgba(18, 173, 253, 0.45)' },
           { offset: 1, color: 'rgba(85, 146, 247, 0.15)' }

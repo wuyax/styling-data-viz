@@ -11,7 +11,7 @@
 
 ### ✅ 解决方案：双图层复合叠加 (Compound Dual-Layer Overlay)
 通过叠加两个属性相同或互补的 Series：
-- **底层 (Base Series)**：配置 **低透明度的 `LinearGradient` 颜色渐变**，提供柔和发光衬底。
+- **底层 (Base Series)**：配置 **低透明度的 `LinearGradient` 颜色渐变**，提供柔和发光衬底；**必须设置 `borderColor` 与当前系列的发光主色保持一致**（如 `borderColor: '#12adfd'`, `borderWidth: 1.5`），用于硬朗地勾勒出柱体结构边界。
 - **顶层 (Stripe Series)**：配置 **100% 背景透明 (`bgColor: 'transparent'`) 的斜条纹 Pattern**，呈现出精细发光的斜纹。
 
 工具函数位置：[`references/stripePattern.ts`](../../references/stripePattern.ts)
@@ -20,7 +20,7 @@
 
 ## 2. 柱状图双层叠加范例 (Bar Chart Layering)
 
-使用 `barGap: '-100%'` 将斜纹层精准重叠于渐变层之上：
+使用 `barGap: '-100%'` 将斜纹层精准重叠于渐变层之上，底层显式配置系列同色 `borderColor`：
 
 ```typescript
 import { createStripePattern } from '../../references/stripePattern';
