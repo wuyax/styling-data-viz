@@ -4,6 +4,7 @@
  */
 
 import * as echarts from 'echarts';
+import type { EChartsOption } from 'echarts';
 
 // ============================================================================
 // 1. 水墨青绿面积折线图 (Guofeng Ink-Green Smooth Area Line Chart)
@@ -11,7 +12,7 @@ import * as echarts from 'echarts';
 export const getGuofengSmoothLineOption = (data = {
   categories: ['2017', '2018', '2019', '2020', '2021', '2022'],
   seriesData: [120, 230, 450, 540, 780, 920]
-}) => ({
+}): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',

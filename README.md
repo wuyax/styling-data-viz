@@ -17,7 +17,7 @@
   - **「国风」 (Guofeng)**：水墨丹青、青绿山水与藤黄金边，专为生态环境、智慧文旅、数字故宫、农业大屏打造。
   - **「幻紫」 (Huanzi)**：赛博朋克霓虹、电光蓝紫、极光高亮、三维三角柱图与玉珏图，专为 AI 算力中心、元宇宙、机器人驾驶舱打造。
 - 🏁 **斜条纹与双图层复合渐变 (Stripe Texture & Compound Gradients)**：
-  - 内置 `stripePattern.ts` / `stripePattern.js` 动态无缝斜条纹 Canvas 生成器。
+  - 内置 `stripePattern.ts` 动态无缝斜条纹 Canvas 生成器。
   - 完美解决单图层赋值遮盖渐变痛点，通过底层渐变 + 顶层透明斜条纹遮罩 (`barGap: '-100%'`)，打造极致高质感柱图与全息折线面积图。
 - 📊 **ECharts 5 / 6+ 深度适配**：涵盖折线渐变、斜纹胶囊柱图、三维三角柱图、中式玉环饼图、双轴图、无针仪表盘与水墨/电光迁徙飞线地图等大屏组件。
 - 📐 **动态容器自适应 (Responsive Math)**：基于 `ResizeObserver` 与动态 `fitPx` 计算，完美解决大屏拉伸、高分屏字号错位问题。
@@ -36,14 +36,13 @@ data-vis-skill/
 ├── 幻紫png/                         # 幻紫设计风格视觉参考规范图层 (1-5)
 ├── references/                      # 静态资源与工具函数
 │   ├── stripePattern.ts             # 无缝斜条纹 Pattern 生成器 (TypeScript 导出)
-│   ├── stripePattern.js             # 无缝斜条纹 Pattern 生成器 (JavaScript 导出)
 │   ├── qunqing-theme.json           # [兼容向后] 「群青」主题 JSON
 │   └── themes/                      # 多风格 Theme 目录
 │       ├── qunqing-theme.json       # 「群青」 Theme Builder 文件
 │       ├── guofeng-theme.json       # 「国风」 Theme Builder 文件
 │       └── huanzi-theme.json       # 「幻紫」 Theme Builder 文件
 ├── rules/                           # 详细细则指南
-│   ├── general/                     # 通用规范 (通用 ECharts 配置、斜条纹复合渐变、响应式、避坑)
+│   ├── general/                     # 通用规范 (通用 ECharts 配置、斜纹复合渐变、响应式、避坑)
 │   │   ├── stripe-texture-and-gradients.md
 │   │   ├── echarts-spec.md
 │   │   ├── layout-and-responsive.md
@@ -53,7 +52,7 @@ data-vis-skill/
 │       ├── qunqing.md               # 「群青」科技暗蓝色彩与字体规范
 │       ├── guofeng.md               # 「国风」水墨青绿色彩与字体规范
 │       └── huanzi.md                # 「幻紫」赛博霓虹色彩与字体规范
-└── examples/                        # 可直接调用的 JavaScript 图表代码范例
+└── examples/                        # 可直接调用的 TypeScript 图表代码范例
     ├── qunqing/                     # 群青风格示例 (basic-charts, effect-charts, map-geo-charts)
     ├── guofeng/                     # 国风风格示例 (basic-charts, map-geo-charts)
     └── huanzi/                      # 幻紫风格示例 (basic-charts, effect-charts)

@@ -4,11 +4,12 @@
  */
 
 import * as echarts from 'echarts';
+import type { EChartsOption } from 'echarts';
 
 // ============================================================================
 // 1. 2D 地图 + 迁徙飞线图 (Geo Map with Migration Lines)
 // ============================================================================
-export const getGeoMapLinesOption = () => {
+export const getGeoMapLinesOption = (): EChartsOption => {
   const geoCoordMap = {
     '北京': [116.46, 39.92],
     '上海': [121.48, 31.22],
@@ -107,7 +108,7 @@ export const getGeoMapLinesOption = () => {
 // ============================================================================
 // 2. 大屏热力图 (Screen Heatmap)
 // ============================================================================
-export const getHeatmapOption = () => {
+export const getHeatmapOption = (): EChartsOption => {
   const hours = ['12a', '2a', '4a', '6a', '8a', '10a', '12p', '2p', '4p', '6p', '8p', '10p'];
   const days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
   
@@ -161,7 +162,7 @@ export const getHeatmapOption = () => {
 // ============================================================================
 // 3. 大屏桑基图 (Sankey Flow Chart)
 // ============================================================================
-export const getSankeyOption = () => ({
+export const getSankeyOption = (): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: { trigger: 'item', triggerOn: 'mousemove' },
   series: [{

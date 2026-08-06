@@ -4,6 +4,7 @@
  */
 
 import * as echarts from 'echarts';
+import type { EChartsOption } from 'echarts';
 
 // ============================================================================
 // 1. 三维渐变三角柱图 (Huanzi Triangle Pictorial Bar Chart)
@@ -11,7 +12,7 @@ import * as echarts from 'echarts';
 export const getHuanziTriangleBarOption = (data = {
   categories: ['2019', '2020', '2021', '2022', '2023'],
   seriesData: [110, 140, 160, 200, 180]
-}) => ({
+}): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',
@@ -41,7 +42,7 @@ export const getHuanziTriangleBarOption = (data = {
     barWidth: '35%',
     itemStyle: {
       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-        { offset: 0, color: '#d8a6ff' },
+        { offset: 0, cotonglor: '#d8a6ff' },
         { offset: 0.6, color: '#7c95ff' },
         { offset: 1, color: '#61a4ff' }
       ]),

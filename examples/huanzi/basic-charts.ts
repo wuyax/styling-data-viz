@@ -4,6 +4,7 @@
  */
 
 import * as echarts from 'echarts';
+import type { EChartsOption } from 'echarts';
 
 // ============================================================================
 // 1. 电光蓝紫渐变折线图 (Huanzi Cyber Blue-Purple Line Chart)
@@ -11,7 +12,7 @@ import * as echarts from 'echarts';
 export const getHuanziSmoothLineOption = (data = {
   categories: ['0时', '3时', '6时', '9时', '12时', '15时', '18时'],
   seriesData: [1000, 2000, 1500, 4000, 2800, 3500, 4200]
-}) => ({
+}): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',

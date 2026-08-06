@@ -14,7 +14,7 @@
 - **底层 (Base Series)**：配置 **低透明度的 `LinearGradient` 颜色渐变**，提供柔和发光衬底。
 - **顶层 (Stripe Series)**：配置 **100% 背景透明 (`bgColor: 'transparent'`) 的斜条纹 Pattern**，呈现出精细发光的斜纹。
 
-工具函数位置：[`references/stripePattern.ts`](../../references/stripePattern.ts) 或 [`references/stripePattern.js`](../../references/stripePattern.js)
+工具函数位置：[`references/stripePattern.ts`](../../references/stripePattern.ts)
 
 ---
 

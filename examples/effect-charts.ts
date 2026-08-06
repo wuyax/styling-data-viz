@@ -4,11 +4,12 @@
  */
 
 import * as echarts from 'echarts';
+import type { EChartsOption } from 'echarts';
 
 // ============================================================================
 // 1. 折柱混合双轴图 (Combo Line & Bar Dual Axis)
 // ============================================================================
-export const getComboDualAxisOption = () => ({
+export const getComboDualAxisOption = (): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',
@@ -81,7 +82,7 @@ export const getComboDualAxisOption = () => ({
 export const getPictorialBarOption = (data = {
   categories: ['服务器 A', '服务器 B', '服务器 C', '服务器 D', '服务器 E'],
   seriesData: [82, 65, 94, 78, 56]
-}) => ({
+}): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: { trigger: 'axis' },
   grid: { top: '15%', left: '3%', right: '4%', bottom: '5%', containLabel: true },
@@ -130,7 +131,7 @@ export const getPictorialBarOption = (data = {
 // ============================================================================
 // 3. 科技大屏仪表盘 (Tech Gauge Chart)
 // ============================================================================
-export const getGaugeOption = (title = '系统健康度', value = 92.4) => ({
+export const getGaugeOption = (title = '系统健康度', value = 92.4): EChartsOption => ({
   backgroundColor: 'transparent',
   series: [{
     type: 'gauge',

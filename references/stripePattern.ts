@@ -21,7 +21,7 @@ export interface StripePatternOptions {
  */
 export const createStripePattern = (options: StripePatternOptions) => {
   const {
-    mainColor,
+    mainColor = 'rgba(255, 255, 255, 0.35)',
     bgColor = 'transparent',
     angle = 45,
     density = 'medium',
@@ -45,6 +45,14 @@ export const createStripePattern = (options: StripePatternOptions) => {
   // 3. 自动推导无缝平铺的整数 Width 和 Height
   const width = Math.max(4, Math.round(pitch / Math.sin(rad)));
   const height = Math.max(4, Math.round(width * Math.tan(rad)));
+
+  // SSR 环境安全防护
+  if (typeof document === 'undefined') {
+    return {
+      image: null,
+      repeat: 'repeat' as const
+    };
+  }
 
   // 4. 离屏 Canvas 无缝绘制
   const canvas = document.createElement('canvas');

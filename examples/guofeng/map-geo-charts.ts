@@ -4,11 +4,12 @@
  */
 
 import * as echarts from 'echarts';
+import type { EChartsOption } from 'echarts';
 
 // ============================================================================
 // 1. 水墨地图 + 青绿/鎏金迁徙飞线图 (Guofeng Ink Map with Flylines)
 // ============================================================================
-export const getGuofengGeoMapLinesOption = () => {
+export const getGuofengGeoMapLinesOption = (): EChartsOption => {
   const geoCoordMap = {
     '北京': [116.46, 39.92],
     '密云区': [116.85, 40.37],

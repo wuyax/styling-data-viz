@@ -140,7 +140,7 @@ flowchart TD
 - **Skill 核心入口**：`SKILL.md`
 - **项目说明**：`README.md`
 - **静态参考与工具函数 (`references/`)**：
-  - `stripePattern.ts` / `stripePattern.js` —— 无缝科技斜条纹 Pattern 动态生成工具
+  - `stripePattern.ts` —— 无缝科技斜条纹 Pattern 动态生成工具 (TypeScript 导出)
   - `themes/qunqing-theme.json` —— 「群青」 Theme Builder 文件
   - `themes/guofeng-theme.json` —— 「国风」 Theme Builder 文件
   - `themes/huanzi-theme.json` —— 「幻紫」 Theme Builder 文件
