@@ -23,6 +23,14 @@
 - 📐 **动态容器自适应 (Responsive Math)**：基于 `ResizeObserver` 与动态 `fitPx` 计算，完美解决大屏拉伸、高分屏字号错位问题。
 - 🚫 **避坑反模式库 (Anti-Patterns)**：系统总结“廉价塑料感”常见错误（平涂实色、硬边框、过度描边、噪点网格），并提供对比优化对策。
 
+## 🚀 Skill 安装方式 (Installation)
+
+推荐使用 `skills` CLI 工具直接一键安装本 Skill（Git 仓库形式）：
+
+```bash
+npx skills add https://github.com/wuyax/data-vis-skill.git
+```
+
 ---
 
 ## 📂 目录结构 (Directory Structure)
@@ -32,8 +40,6 @@ data-vis-skill/
 ├── SKILL.md                         # Skill 入口指令与多风格 Agent 核心调度规则
 ├── README.md                        # 项目说明文档
 ├── skills-lock.json                 # Skill 依赖与锁定配置
-├── 国风.jpg                         # 国风设计风格视觉参考规范图
-├── 幻紫png/                         # 幻紫设计风格视觉参考规范图层 (1-5)
 ├── references/                      # 静态资源与工具函数
 │   ├── stripePattern.ts             # 无缝斜条纹 Pattern 生成器 (TypeScript 导出)
 │   ├── qunqing-theme.json           # [兼容向后] 「群青」主题 JSON
