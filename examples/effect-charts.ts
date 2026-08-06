@@ -55,7 +55,6 @@ export const getComboDualAxisOption = (): EChartsOption => ({
       type: 'bar',
       barWidth: '30%',
       itemStyle: {
-        borderRadius: [4, 4, 0, 0],
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           { offset: 0, color: '#00f2fe' },
           { offset: 1, color: '#4facfe' }

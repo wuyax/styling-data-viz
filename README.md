@@ -80,7 +80,6 @@ const option = {
       type: 'bar',
       barWidth: '40%',
       itemStyle: {
-        borderRadius: [4, 4, 0, 0],
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           { offset: 0, color: 'rgba(18, 173, 253, 0.45)' },
           { offset: 1, color: 'rgba(85, 146, 247, 0.15)' }
@@ -96,7 +95,6 @@ const option = {
       barGap: '-100%',
       tooltip: { show: false },
       itemStyle: {
-        borderRadius: [4, 4, 0, 0],
         color: createStripePattern({
           mainColor: 'rgba(255, 255, 255, 0.35)',
           bgColor: 'transparent',

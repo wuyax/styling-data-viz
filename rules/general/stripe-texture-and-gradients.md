@@ -35,11 +35,9 @@ series: [
     backgroundStyle: {
       color: 'rgba(205, 225, 248, 0.03)',
       borderColor: 'rgba(18, 173, 253, 0.15)',
-      borderWidth: 1,
-      borderRadius: [0, 4, 4, 0]
+      borderWidth: 1
     },
     itemStyle: {
-      borderRadius: [0, 4, 4, 0],
       borderWidth: 1.5,
       borderColor: '#12adfd',
       color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
@@ -59,7 +57,6 @@ series: [
     tooltip: { show: false },
     legendHoverLink: false,
     itemStyle: {
-      borderRadius: [0, 4, 4, 0],
       color: createStripePattern({
         mainColor: 'rgba(255, 255, 255, 0.35)', // 清晰发光细线条
         bgColor: 'transparent',                // 100% 透明背景

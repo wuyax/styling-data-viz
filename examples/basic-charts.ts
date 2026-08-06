@@ -66,7 +66,7 @@ export const getSmoothLineOption = (data = {
 });
 
 // ============================================================================
-// 2. 胶囊圆角柱状图 (Capsule Rounded Bar Chart with Background)
+// 2. 渐变柱状图 (Gradient Bar Chart with Background)
 // ============================================================================
 export const getCapsuleBarOption = (data = {
   categories: ['全华东', '华南区', '华北区', '西南区', '西北区'],
@@ -100,11 +100,9 @@ export const getCapsuleBarOption = (data = {
     barWidth: '28%',
     showBackground: true,
     backgroundStyle: {
-      color: 'rgba(205, 225, 248, 0.03)',
-      borderRadius: [4, 4, 0, 0]
+      color: 'rgba(205, 225, 248, 0.03)'
     },
     itemStyle: {
-      borderRadius: [4, 4, 0, 0],
       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
         { offset: 0, color: '#12adfd' },
         { offset: 1, color: '#11c3dd' }

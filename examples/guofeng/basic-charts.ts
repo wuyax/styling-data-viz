@@ -102,11 +102,9 @@ export const getGuofengBarOption = (data = {
     barWidth: '24%',
     showBackground: true,
     backgroundStyle: {
-      color: 'rgba(118, 181, 166, 0.03)',
-      borderRadius: [4, 4, 0, 0]
+      color: 'rgba(118, 181, 166, 0.03)'
     },
     itemStyle: {
-      borderRadius: [4, 4, 0, 0],
       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
         { offset: 0, color: '#30b596' },
         { offset: 1, color: '#4892bd' }

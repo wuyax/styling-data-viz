@@ -102,11 +102,9 @@ export const getHuanziBarOption = (data = {
     barWidth: '26%',
     showBackground: true,
     backgroundStyle: {
-      color: 'rgba(145, 159, 186, 0.04)',
-      borderRadius: [4, 4, 0, 0]
+      color: 'rgba(145, 159, 186, 0.04)'
     },
     itemStyle: {
-      borderRadius: [4, 4, 0, 0],
       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
         { offset: 0, color: '#d8a6ff' },
         { offset: 1, color: '#61a4ff' }
