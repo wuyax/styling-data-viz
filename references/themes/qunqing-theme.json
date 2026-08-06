@@ -1,0 +1,170 @@
+{
+    "version": 1,
+    "themeName": "qunqing-data-vis",
+    "theme": {
+        "seriesCnt": "6",
+        "backgroundColor": "#050e17",
+        "titleColor": "#f0f0f0",
+        "subtitleColor": "#cde1f8",
+        "textColorShow": true,
+        "textColor": "#8299b1",
+        "markTextColor": "#f0f0f0",
+        "color": [
+            "#12adfd",
+            "#11c3dd",
+            "#e68513",
+            "#5592f7",
+            "#18db6c",
+            "#83aad8"
+        ],
+        "borderColor": "rgba(18, 173, 253, 0.2)",
+        "borderWidth": 0,
+        "visualMapColor": [
+            "#12adfd",
+            "#11c3dd",
+            "#0a192f"
+        ],
+        "legendTextColor": "#8299b1",
+        "kColor": "#db3418",
+        "kColor0": "#18db6c",
+        "kBorderColor": "#db3418",
+        "kBorderColor0": "#18db6c",
+        "kBorderWidth": 1,
+        "lineWidth": 1.5,
+        "symbolSize": 5,
+        "symbol": "circle",
+        "symbolBorderWidth": 1,
+        "lineSmooth": true,
+        "graphLineWidth": 1,
+        "graphLineColor": "rgba(130, 153, 177, 0.2)",
+        "mapLabelColor": "#f0f0f0",
+        "mapLabelColorE": "#12adfd",
+        "mapBorderColor": "rgba(17, 195, 221, 0.4)",
+        "mapBorderColorE": "#12adfd",
+        "mapBorderWidth": 1,
+        "mapBorderWidthE": 1.5,
+        "mapAreaColor": "#0a192f",
+        "mapAreaColorE": "rgba(18, 173, 253, 0.3)",
+        "axes": [
+            {
+                "type": "all",
+                "name": "General Axis",
+                "axisLineShow": true,
+                "axisLineColor": "rgba(205, 225, 248, 0.15)",
+                "axisTickShow": false,
+                "axisTickColor": "rgba(205, 225, 248, 0.15)",
+                "axisLabelShow": true,
+                "axisLabelColor": "#8299b1",
+                "splitLineShow": true,
+                "splitLineColor": [
+                    "rgba(205, 225, 248, 0.05)"
+                ],
+                "splitAreaShow": false,
+                "splitAreaColor": [
+                    "rgba(250,250,250,0.01)",
+                    "rgba(210,219,238,0.02)"
+                ]
+            },
+            {
+                "type": "category",
+                "name": "Category Axis",
+                "axisLineShow": true,
+                "axisLineColor": "rgba(205, 225, 248, 0.15)",
+                "axisTickShow": false,
+                "axisTickColor": "rgba(205, 225, 248, 0.15)",
+                "axisLabelShow": true,
+                "axisLabelColor": "#8299b1",
+                "splitLineShow": false,
+                "splitLineColor": [
+                    "rgba(205, 225, 248, 0.05)"
+                ],
+                "splitAreaShow": false,
+                "splitAreaColor": [
+                    "rgba(250,250,250,0.01)",
+                    "rgba(210,219,238,0.02)"
+                ]
+            },
+            {
+                "type": "value",
+                "name": "Value Axis",
+                "axisLineShow": false,
+                "axisLineColor": "rgba(205, 225, 248, 0.15)",
+                "axisTickShow": false,
+                "axisTickColor": "rgba(205, 225, 248, 0.15)",
+                "axisLabelShow": true,
+                "axisLabelColor": "#8299b1",
+                "splitLineShow": true,
+                "splitLineColor": [
+                    "rgba(205, 225, 248, 0.05)"
+                ],
+                "splitAreaShow": false,
+                "splitAreaColor": [
+                    "rgba(250,250,250,0.01)",
+                    "rgba(210,219,238,0.02)"
+                ]
+            },
+            {
+                "type": "log",
+                "name": "Log Axis",
+                "axisLineShow": false,
+                "axisLineColor": "rgba(205, 225, 248, 0.15)",
+                "axisTickShow": false,
+                "axisTickColor": "rgba(205, 225, 248, 0.15)",
+                "axisLabelShow": true,
+                "axisLabelColor": "#8299b1",
+                "splitLineShow": true,
+                "splitLineColor": [
+                    "rgba(205, 225, 248, 0.05)"
+                ],
+                "splitAreaShow": false,
+                "splitAreaColor": [
+                    "rgba(250,250,250,0.01)",
+                    "rgba(210,219,238,0.02)"
+                ]
+            },
+            {
+                "type": "time",
+                "name": "Time Axis",
+                "axisLineShow": true,
+                "axisLineColor": "rgba(205, 225, 248, 0.15)",
+                "axisTickShow": false,
+                "axisTickColor": "rgba(205, 225, 248, 0.15)",
+                "axisLabelShow": true,
+                "axisLabelColor": "#8299b1",
+                "splitLineShow": false,
+                "splitLineColor": [
+                    "rgba(205, 225, 248, 0.05)"
+                ],
+                "splitAreaShow": false,
+                "splitAreaColor": [
+                    "rgba(250,250,250,0.01)",
+                    "rgba(210,219,238,0.02)"
+                ]
+            }
+        ],
+        "axisSeperateSetting": true,
+        "toolboxColor": "#8299b1",
+        "toolboxEmphasisColor": "#12adfd",
+        "tooltipAxisColor": "rgba(18, 173, 253, 0.4)",
+        "tooltipAxisWidth": 1,
+        "timelineLineColor": "rgba(18, 173, 253, 0.2)",
+        "timelineLineWidth": 1.5,
+        "timelineItemColor": "rgba(18, 173, 253, 0.5)",
+        "timelineItemColorE": "#12adfd",
+        "timelineCheckColor": "#12adfd",
+        "timelineCheckBorderColor": "rgba(18, 173, 253, 0.2)",
+        "timelineItemBorderWidth": 1,
+        "timelineControlColor": "#8299b1",
+        "timelineControlBorderColor": "#8299b1",
+        "timelineControlBorderWidth": 1,
+        "timelineLabelColor": "#8299b1",
+        "gridLeft": "4%",
+        "gridRight": "4%",
+        "gridTop": "15%",
+        "gridBottom": "8%",
+        "legendLeft": "right",
+        "legendRight": "4%",
+        "legendTop": "2%",
+        "legendBottom": ""
+    }
+}

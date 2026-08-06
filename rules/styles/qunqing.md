@@ -1,6 +1,6 @@
-# 「群青」可视化大屏设计系统与排版规范 (Ultranavy Specification)
+# 「群青」科技暗蓝大屏设计规范 (Ultranavy Specification)
 
-「群青」主题设计规范，涵盖色彩系统、字阶体系与大屏组件视觉规范。
+「群青」主题设计规范，涵盖科技极客暗蓝风格的色彩系统、字阶体系与大屏组件视觉规范。适用于科技驾驶舱、数据中心、暗色 Dashboard。
 
 ---
 
@@ -39,7 +39,6 @@
 ### 标题字体 (Title Font Family)
 优先加载 `抖音美好体` 或系统高对比度黑体：
 ```javascript
-// Header / Section Titles
 fontFamily: '抖音美好体, "PingFang SC", "Microsoft YaHei", sans-serif'
 ```
 - **一级标题 (HEADER)**: `40px`, 居中/切角标题栏
@@ -56,7 +55,7 @@ fontFamily: '"Source Han Sans SC", "思源黑体 SC", "PingFang SC", sans-serif'
 - **次要/坐标轴刻度**: `W16` 字重, `12px`
 
 ### 关键数字与 KPI 字体 (Metrics & Tabular Numbers)
-数值指标强强制使用等宽数字字体 `D-DIN`：
+数值指标强制使用等宽数字字体 `D-DIN`：
 ```javascript
 fontFamily: 'D-DIN, "DIN Alternate", Roboto, monospace',
 fontFeatureSettings: '"tnum"'

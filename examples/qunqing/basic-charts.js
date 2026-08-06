@@ -1,0 +1,181 @@
+/**
+ * 「群青」大屏基础图表模板 (Basic Ultranavy Screen Charts)
+ * 包含：平滑渐变面积折线图、胶囊圆角柱状图、KPI 环形饼图、多维雷达图
+ */
+
+import * as echarts from 'echarts';
+
+// ============================================================================
+// 1. 平滑渐变面积折线图 (Smooth Area Line Chart)
+// ============================================================================
+export const getSmoothLineOption = (data = {
+  categories: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+  seriesData: [120, 230, 700, 540, 890, 1200, 980]
+}) => ({
+  backgroundColor: 'transparent',
+  tooltip: {
+    trigger: 'axis',
+    backgroundColor: 'rgba(5, 14, 23, 0.85)',
+    borderColor: 'rgba(18, 173, 253, 0.4)',
+    textStyle: { color: '#f0f0f0', fontSize: 13 },
+    extraCssText: 'backdrop-filter: blur(8px); box-shadow: 0 8px 32px rgba(0,0,0,0.5);',
+    axisPointer: { type: 'line', lineStyle: { color: 'rgba(18, 173, 253, 0.5)', type: 'dashed' } }
+  },
+  grid: { top: '15%', left: '4%', right: '4%', bottom: '8%', containLabel: true },
+  xAxis: {
+    type: 'category',
+    boundaryGap: false,
+    data: data.categories,
+    axisLine: { lineStyle: { color: 'rgba(205, 225, 248, 0.15)' } },
+    axisTick: { show: false },
+    axisLabel: { color: '#8299b1', fontSize: 12, fontFamily: 'Source Han Sans SC, sans-serif' }
+  },
+  yAxis: {
+    type: 'value',
+    axisLine: { show: false },
+    axisTick: { show: false },
+    axisLabel: { color: '#8299b1', fontSize: 12, fontFamily: 'D-DIN, Roboto, monospace' },
+    splitLine: { lineStyle: { color: 'rgba(205, 225, 248, 0.05)', type: 'dashed' } }
+  },
+  series: [{
+    name: '实时并发数',
+    type: 'line',
+    smooth: 0.35,
+    showSymbol: false,
+    symbol: 'circle',
+    symbolSize: 6,
+    itemStyle: { color: '#12adfd', borderColor: '#ffffff', borderWidth: 2 },
+    lineStyle: {
+      width: 2.5,
+      color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+        { offset: 0, color: '#11c3dd' },
+        { offset: 1, color: '#12adfd' }
+      ]),
+      shadowColor: 'rgba(18, 173, 253, 0.4)',
+      shadowBlur: 10
+    },
+    areaStyle: {
+      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        { offset: 0, color: 'rgba(18, 173, 253, 0.22)' },
+        { offset: 1, color: 'rgba(18, 173, 253, 0.00)' }
+      ])
+    },
+    data: data.seriesData
+  }]
+});
+
+// ============================================================================
+// 2. 胶囊圆角柱状图 (Capsule Rounded Bar Chart with Background)
+// ============================================================================
+export const getCapsuleBarOption = (data = {
+  categories: ['全华东', '华南区', '华北区', '西南区', '西北区'],
+  seriesData: [850, 720, 560, 430, 310]
+}) => ({
+  backgroundColor: 'transparent',
+  tooltip: {
+    trigger: 'axis',
+    backgroundColor: 'rgba(5, 14, 23, 0.85)',
+    borderColor: 'rgba(18, 173, 253, 0.4)',
+    textStyle: { color: '#f0f0f0', fontSize: 13 }
+  },
+  grid: { top: '15%', left: '4%', right: '4%', bottom: '8%', containLabel: true },
+  xAxis: {
+    type: 'category',
+    data: data.categories,
+    axisLine: { lineStyle: { color: 'rgba(205, 225, 248, 0.15)' } },
+    axisTick: { show: false },
+    axisLabel: { color: '#8299b1', fontSize: 12 }
+  },
+  yAxis: {
+    type: 'value',
+    axisLine: { show: false },
+    axisTick: { show: false },
+    axisLabel: { color: '#8299b1', fontSize: 12, fontFamily: 'D-DIN, monospace' },
+    splitLine: { lineStyle: { color: 'rgba(205, 225, 248, 0.05)', type: 'dashed' } }
+  },
+  series: [{
+    name: '区域销售额',
+    type: 'bar',
+    barWidth: '28%',
+    showBackground: true,
+    backgroundStyle: {
+      color: 'rgba(205, 225, 248, 0.03)',
+      borderRadius: [4, 4, 0, 0]
+    },
+    itemStyle: {
+      borderRadius: [4, 4, 0, 0],
+      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        { offset: 0, color: '#12adfd' },
+        { offset: 1, color: '#11c3dd' }
+      ])
+    },
+    label: {
+      show: true,
+      position: 'top',
+      color: '#cde1f8',
+      fontSize: 12,
+      fontFamily: 'D-DIN Bold, monospace'
+    },
+    data: data.seriesData
+  }]
+});
+
+// ============================================================================
+// 3. KPI 切口环形图 (Doughnut KPI Ring Chart with Gap & Meter Outer Ring)
+// ============================================================================
+export const getDoughnutKpiOption = (title = '核心负载', value = '78.5%', list = [
+  { name: 'IT 服务', value: 35.8 },
+  { name: '云计算', value: 28.8 },
+  { name: '大数据', value: 26.8 },
+  { name: '物联网', value: 15.8 }
+]) => ({
+  backgroundColor: 'transparent',
+  title: {
+    text: value,
+    subtext: title,
+    x: 'center',
+    y: '42%',
+    textStyle: { color: '#f0f0f0', fontSize: 26, fontWeight: 'bold', fontFamily: 'D-DIN Bold' },
+    subTextStyle: { color: '#8299b1', fontSize: 13 }
+  },
+  tooltip: {
+    trigger: 'item',
+    backgroundColor: 'rgba(5, 14, 23, 0.85)',
+    borderColor: 'rgba(18, 173, 253, 0.4)',
+    textStyle: { color: '#f0f0f0' }
+  },
+  legend: {
+    bottom: '2%',
+    left: 'center',
+    icon: 'rect',
+    itemWidth: 10,
+    itemHeight: 10,
+    itemGap: 16,
+    textStyle: { color: '#8299b1', fontSize: 12 }
+  },
+  series: [{
+    type: 'pie',
+    radius: ['58%', '76%'],
+    center: ['50%', '48%'],
+    avoidLabelOverlap: true,
+    itemStyle: {
+      borderRadius: 4,
+      borderColor: '#050e17',
+      borderWidth: 3
+    },
+    label: { show: false },
+    data: list.map((item, index) => {
+      const qunqingColors = [
+        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#12adfd' }, { offset: 1, color: '#11c3dd' }]),
+        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#e68513' }, { offset: 1, color: '#b26132' }]),
+        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#5592f7' }, { offset: 1, color: '#6a9cc4' }]),
+        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#18db6c' }, { offset: 1, color: '#34a853' }])
+      ];
+      return {
+        name: item.name,
+        value: item.value,
+        itemStyle: { color: qunqingColors[index % qunqingColors.length] }
+      };
+    })
+  }]
+});

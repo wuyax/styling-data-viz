@@ -1,0 +1,95 @@
+{
+    "version": 1,
+    "themeName": "huanzi-data-vis",
+    "theme": {
+        "seriesCnt": "6",
+        "backgroundColor": "#030611",
+        "titleColor": "#ffffff",
+        "subtitleColor": "#61a4ff",
+        "textColorShow": true,
+        "textColor": "#919fba",
+        "markTextColor": "#ffffff",
+        "color": [
+            "#61a4ff",
+            "#7c95ff",
+            "#d8a6ff",
+            "#ffde8d",
+            "#dee4ff",
+            "#aaacff"
+        ],
+        "borderColor": "rgba(97, 164, 255, 0.3)",
+        "borderWidth": 0,
+        "visualMapColor": [
+            "#61a4ff",
+            "#d8a6ff",
+            "#0b1026"
+        ],
+        "legendTextColor": "#919fba",
+        "kColor": "#f86185",
+        "kColor0": "#78dbf0",
+        "kBorderColor": "#f86185",
+        "kBorderColor0": "#78dbf0",
+        "kBorderWidth": 1,
+        "lineWidth": 1.5,
+        "symbolSize": 5,
+        "symbol": "circle",
+        "symbolBorderWidth": 1,
+        "lineSmooth": true,
+        "graphLineWidth": 1,
+        "graphLineColor": "rgba(145, 159, 186, 0.2)",
+        "mapLabelColor": "#ffffff",
+        "mapLabelColorE": "#61a4ff",
+        "mapBorderColor": "rgba(97, 164, 255, 0.5)",
+        "mapBorderColorE": "#d8a6ff",
+        "mapBorderWidth": 1,
+        "mapBorderWidthE": 1.5,
+        "mapAreaColor": "#0a0f24",
+        "mapAreaColorE": "rgba(97, 164, 255, 0.35)",
+        "axes": [
+            {
+                "type": "all",
+                "name": "General Axis",
+                "axisLineShow": true,
+                "axisLineColor": "rgba(145, 159, 186, 0.2)",
+                "axisTickShow": false,
+                "axisLabelShow": true,
+                "axisLabelColor": "#919fba",
+                "splitLineShow": true,
+                "splitLineColor": [
+                    "rgba(145, 159, 186, 0.06)"
+                ]
+            },
+            {
+                "type": "category",
+                "name": "Category Axis",
+                "axisLineShow": true,
+                "axisLineColor": "rgba(145, 159, 186, 0.2)",
+                "axisTickShow": false,
+                "axisLabelShow": true,
+                "axisLabelColor": "#919fba",
+                "splitLineShow": false
+            },
+            {
+                "type": "value",
+                "name": "Value Axis",
+                "axisLineShow": false,
+                "axisLabelShow": true,
+                "axisLabelColor": "#919fba",
+                "splitLineShow": true,
+                "splitLineColor": [
+                    "rgba(145, 159, 186, 0.06)"
+                ]
+            }
+        ],
+        "axisSeperateSetting": true,
+        "toolboxColor": "#919fba",
+        "toolboxEmphasisColor": "#61a4ff",
+        "tooltipAxisColor": "rgba(97, 164, 255, 0.5)",
+        "tooltipAxisWidth": 1,
+        "gridLeft": "4%",
+        "gridRight": "4%",
+        "gridTop": "15%",
+        "gridBottom": "8%",
+        "legendLeft": "right"
+    }
+}

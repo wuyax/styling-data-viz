@@ -12,7 +12,7 @@
 | **强网格杂线** 默认白/灰色粗网格线 | 视觉极其混乱，干扰数据本身 | 隐藏 Y 轴线，网格线设为 `rgba(255, 255, 255, 0.05)` |
 | **四周边框全显** 包含 Top/Right 边框 | 极其落后老套的传统报表样式 | 关闭顶部与右侧轴线及刻度：`show: false` |
 | **刺眼霓虹高频流光** | 极易引起视觉疲劳，显得廉价 | 使用平滑低饱和渐变（15% → 0.5% 透明度） |
-| **纯白/纯黑色文字** `#ffffff` / `#000000` | 对比度过猛，刺眼或看不清 | 辅助字用高雅中灰 `#94a3b8`，主高亮用 `#f8fafc` |
+| **纯白/纯黑色文字** `#ffffff` / `#000000` | 对比度过猛，刺眼或看不清 | 辅助字用高雅中灰，主高亮用高亮柔白/玉白 |
 | **巨大的 Legend 遮挡** 位于图表正中 | 占据极大部分可视空间 | 移至 `top: '2%', right: '4%'`，字号 `12px` |
 | **3D 饼图 / 饼图切片过多** (> 5 块) | 视角失真，数据难以精确读出 | 替换为极简环形图 `radius: ['55%', '75%']` 或条形图 |
 | **硬编码固定 PX 布局** 缺乏 containLabel | 大屏缩放时文本切断被遮挡 | 设置 `containLabel: true` 并使用动态 fitPx |
@@ -59,11 +59,11 @@ series: [{
   type: 'line',
   smooth: 0.35,
   showSymbol: false,
-  lineStyle: { width: 2.5, color: '#00f2fe' },
+  lineStyle: { width: 2.5, color: '#30b596' },
   areaStyle: {
     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      { offset: 0, color: 'rgba(0, 242, 254, 0.25)' },
-      { offset: 1, color: 'rgba(0, 242, 254, 0.00)' }
+      { offset: 0, color: 'rgba(48, 181, 150, 0.25)' },
+      { offset: 1, color: 'rgba(48, 181, 150, 0.00)' }
     ])
   }
 }]
