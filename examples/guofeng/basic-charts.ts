@@ -5,6 +5,7 @@
 
 import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';
+import { createKpiRingOption } from '../../references/kpiRingHelper';
 
 // ============================================================================
 // 1. 水墨青绿面积折线图 (Guofeng Ink-Green Smooth Area Line Chart)
@@ -130,55 +131,18 @@ export const getGuofengKpiRingOption = (title = '发放率', value = '11%', list
   { name: '医疗健康', value: 16.8 },
   { name: '生态环境', value: 15.66 },
   { name: '文化旅游', value: 13.2 }
-]): EChartsOption => ({
-  backgroundColor: 'transparent',
-  title: {
-    text: value,
-    subtext: title,
-    left: 'center',
-    top: '42%',
-    textStyle: { color: '#eef4f0', fontSize: 28, fontWeight: 'bold', fontFamily: 'D-DIN Bold' },
-    subtextStyle: { color: '#76b5a6', fontSize: 13 }
-  },
-  tooltip: {
-    trigger: 'item',
-    backgroundColor: 'rgba(4, 10, 14, 0.88)',
-    borderColor: 'rgba(48, 181, 150, 0.4)',
-    textStyle: { color: '#eef4f0' }
-  },
-  legend: {
-    bottom: '2%',
-    left: 'center',
-    icon: 'rect',
-    itemWidth: 10,
-    itemHeight: 10,
-    itemGap: 14,
-    textStyle: { color: '#76b5a6', fontSize: 12 }
-  },
-  series: [{
-    type: 'pie',
-    radius: ['58%', '76%'],
-    center: ['50%', '48%'],
-    avoidLabelOverlap: true,
-    itemStyle: {
-      borderRadius: 4,
-      borderColor: '#040a0e',
-      borderWidth: 3
-    },
-    label: { show: false },
-    data: list.map((item, index) => {
-      const guofengGradients = [
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#30b596' }, { offset: 1, color: '#4892bd' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#c0b65d' }, { offset: 1, color: '#d6c398' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#4861bd' }, { offset: 1, color: '#7e8cbd' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#69bc5e' }, { offset: 1, color: '#93bd8e' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#c8bce7' }, { offset: 1, color: '#d2d1d4' }])
-      ];
-      return {
-        name: item.name,
-        value: item.value,
-        itemStyle: { color: guofengGradients[index % guofengGradients.length] }
-      };
-    })
-  }]
+]): EChartsOption => createKpiRingOption({
+  title,
+  value,
+  list,
+  titleColor: '#eef4f0',
+  subtextColor: '#76b5a6',
+  borderColor: '#040a0e',
+  gradients: [
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#30b596' }, { offset: 1, color: '#4892bd' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#c0b65d' }, { offset: 1, color: '#d6c398' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#4861bd' }, { offset: 1, color: '#7e8cbd' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#69bc5e' }, { offset: 1, color: '#93bd8e' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#c8bce7' }, { offset: 1, color: '#d2d1d4' }])
+  ]
 });

@@ -141,14 +141,17 @@ export const getGaugeOption = (title = '系统健康度', value = 92.4): ECharts
     min: 0,
     max: 100,
     splitNumber: 10,
-    itemStyle: {
-      color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-        { offset: 0, color: '#38ef7d' },
-        { offset: 0.7, color: '#00f2fe' },
-        { offset: 1, color: '#a855f7' }
-      ])
+    progress: {
+      show: true,
+      width: 10,
+      itemStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+          { offset: 0, color: '#38ef7d' },
+          { offset: 0.7, color: '#00f2fe' },
+          { offset: 1, color: '#a855f7' }
+        ])
+      }
     },
-    progress: { show: true, width: 10 },
     pointer: { show: false }, // 隐藏传统粗针，使用现代化无针环形进度
     axisLine: {
       lineStyle: {

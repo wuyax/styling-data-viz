@@ -174,7 +174,7 @@ export const getSankeyOption = (): EChartsOption => ({
     nodeGap: 12,
     nodeWidth: 14,
     itemStyle: { color: '#00f2fe', borderColor: 'transparent' },
-    lineStyle: { color: 'gradient', curveness: 0.5, opacity: 0.35 },
+    lineStyle: { color: 'source', curveness: 0.5, opacity: 0.35 },
     label: { color: '#94a3b8', fontSize: 12 },
     data: [
       { name: '流量入口' },

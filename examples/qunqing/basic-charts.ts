@@ -5,6 +5,7 @@
 
 import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';
+import { createKpiRingOption } from '../../references/kpiRingHelper';
 
 // ============================================================================
 // 1. 平滑渐变面积折线图 (Smooth Area Line Chart)
@@ -127,56 +128,19 @@ export const getDoughnutKpiOption = (title = '核心负载', value = '78.5%', li
   { name: '云计算', value: 28.8 },
   { name: '大数据', value: 26.8 },
   { name: '物联网', value: 15.8 }
-]): EChartsOption => ({
-  backgroundColor: 'transparent',
-  title: {
-    text: value,
-    subtext: title,
-    left: 'center',
-    top: '42%',
-    textStyle: { color: '#f0f0f0', fontSize: 26, fontWeight: 'bold', fontFamily: 'D-DIN Bold' },
-    subtextStyle: { color: '#8299b1', fontSize: 13 }
-  },
-  tooltip: {
-    trigger: 'item',
-    backgroundColor: 'rgba(5, 14, 23, 0.85)',
-    borderColor: 'rgba(18, 173, 253, 0.4)',
-    textStyle: { color: '#f0f0f0' }
-  },
-  legend: {
-    bottom: '2%',
-    left: 'center',
-    icon: 'rect',
-    itemWidth: 10,
-    itemHeight: 10,
-    itemGap: 16,
-    textStyle: { color: '#8299b1', fontSize: 12 }
-  },
-  series: [{
-    type: 'pie',
-    radius: ['58%', '76%'],
-    center: ['50%', '48%'],
-    avoidLabelOverlap: true,
-    itemStyle: {
-      borderRadius: 4,
-      borderColor: '#050e17',
-      borderWidth: 3
-    },
-    label: { show: false },
-    data: list.map((item, index) => {
-      const qunqingColors = [
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#12adfd' }, { offset: 1, color: '#11c3dd' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#e68513' }, { offset: 1, color: '#b26132' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#5592f7' }, { offset: 1, color: '#6a9cc4' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#18db6c' }, { offset: 1, color: '#34a853' }])
-      ];
-      return {
-        name: item.name,
-        value: item.value,
-        itemStyle: { color: qunqingColors[index % qunqingColors.length] }
-      };
-    })
-  }]
+]): EChartsOption => createKpiRingOption({
+  title,
+  value,
+  list,
+  titleColor: '#f0f0f0',
+  subtextColor: '#8299b1',
+  borderColor: '#050e17',
+  gradients: [
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#12adfd' }, { offset: 1, color: '#11c3dd' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#e68513' }, { offset: 1, color: '#b26132' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#5592f7' }, { offset: 1, color: '#6a9cc4' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#18db6c' }, { offset: 1, color: '#34a853' }])
+  ]
 });
 
 // ============================================================================
@@ -184,10 +148,12 @@ export const getDoughnutKpiOption = (title = '核心负载', value = '78.5%', li
 // ============================================================================
 export const getRadarOption = (): EChartsOption => ({
   backgroundColor: 'transparent',
+  animationDuration: 1000,
+  animationEasing: 'cubicOut',
   tooltip: { trigger: 'item' },
   legend: {
     top: '2%',
-    right: '2%',
+    right: '4%',
     icon: 'circle',
     textStyle: { color: '#8299b1', fontSize: 12 }
   },
@@ -209,6 +175,7 @@ export const getRadarOption = (): EChartsOption => ({
   },
   series: [{
     type: 'radar',
+    animationDelay: (idx: number) => idx * 150,
     data: [
       {
         value: [90, 85, 95, 88, 75],

@@ -5,6 +5,7 @@
 
 import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';
+import { createKpiRingOption } from '../../references/kpiRingHelper';
 
 // ============================================================================
 // 1. 电光蓝紫渐变折线图 (Huanzi Cyber Blue-Purple Line Chart)
@@ -131,55 +132,19 @@ export const getHuanziRingKpiOption = (title = '计算节点', value = '156,234'
   { name: '25-50mm', value: 20 },
   { name: '50-100mm', value: 15 },
   { name: '100mm以上', value: 5 }
-]): EChartsOption => ({
-  backgroundColor: 'transparent',
-  title: {
-    text: value,
-    subtext: title,
-    left: 'center',
-    top: '40%',
-    textStyle: { color: '#ffffff', fontSize: 26, fontWeight: 'bold', fontFamily: 'DINPro-Medium' },
-    subtextStyle: { color: '#61a4ff', fontSize: 13 }
-  },
-  tooltip: {
-    trigger: 'item',
-    backgroundColor: 'rgba(3, 6, 17, 0.88)',
-    borderColor: 'rgba(97, 164, 255, 0.5)',
-    textStyle: { color: '#ffffff' }
-  },
-  legend: {
-    bottom: '2%',
-    left: 'center',
-    icon: 'rect',
-    itemWidth: 10,
-    itemHeight: 10,
-    itemGap: 14,
-    textStyle: { color: '#919fba', fontSize: 12 }
-  },
-  series: [{
-    type: 'pie',
-    radius: ['56%', '74%'],
-    center: ['50%', '46%'],
-    avoidLabelOverlap: true,
-    itemStyle: {
-      borderRadius: 4,
-      borderColor: '#030611',
-      borderWidth: 3
-    },
-    label: { show: false },
-    data: list.map((item, index) => {
-      const huanziGradients = [
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#61a4ff' }, { offset: 1, color: '#7ca1ff' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#d8a6ff' }, { offset: 1, color: '#aaacff' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#ffde8d' }, { offset: 1, color: '#ffefc8' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#78dbf0' }, { offset: 1, color: '#61a4ff' }]),
-        new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#dee4ff' }, { offset: 1, color: '#aaacff' }])
-      ];
-      return {
-        name: item.name,
-        value: item.value,
-        itemStyle: { color: huanziGradients[index % huanziGradients.length] }
-      };
-    })
-  }]
+]): EChartsOption => createKpiRingOption({
+  title,
+  value,
+  list,
+  titleColor: '#ffffff',
+  subtextColor: '#61a4ff',
+  borderColor: '#030611',
+  fontFamily: 'DINPro-Medium',
+  gradients: [
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#61a4ff' }, { offset: 1, color: '#7ca1ff' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#d8a6ff' }, { offset: 1, color: '#aaacff' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#ffde8d' }, { offset: 1, color: '#ffefc8' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#78dbf0' }, { offset: 1, color: '#61a4ff' }]),
+    new echarts.graphic.LinearGradient(0, 0, 1, 1, [{ offset: 0, color: '#dee4ff' }, { offset: 1, color: '#aaacff' }])
+  ]
 });

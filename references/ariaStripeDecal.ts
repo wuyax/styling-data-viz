@@ -22,8 +22,10 @@ export interface AriaStripeDecalOptions {
   dashArrayX?: (number | [number, number])[];
   /** Y 轴方向 dash 阵列 (若未指定则自动根据 gap 参数生成，默认 [2, 6]) */
   dashArrayY?: (number | [number, number])[];
-  /** 旋转角度 (支持弧度 rad 如 -Math.PI / 4，或角度 deg 如 -45，默认 -45°) */
+  /** 旋转角度 (支持角度 deg 如 -45，或弧度 rad，默认 -45°) */
   rotation?: number;
+  /** 旋转角度单位 ('deg' | 'rad'，默认 'deg') */
+  rotationUnit?: 'deg' | 'rad';
 }
 
 /**
@@ -35,7 +37,7 @@ export interface AriaStripeDecalOptions {
  * @example
  * ```typescript
  * import { createAriaStripeDecal } from './references/ariaStripeDecal';
-
+ *
  * option = {
  *   aria: createAriaStripeDecal({
  *     color: 'rgba(255, 255, 255, 0.8)',
@@ -63,7 +65,8 @@ export const createAriaStripeDecal = (options: AriaStripeDecalOptions = {}) => {
     gap = [2, 6],
     dashArrayX = [1, 0],
     dashArrayY,
-    rotation = -Math.PI / 4
+    rotation = -45,
+    rotationUnit = 'deg'
   } = options;
 
   // 1. 处理 dashArrayY 参数
@@ -78,7 +81,12 @@ export const createAriaStripeDecal = (options: AriaStripeDecalOptions = {}) => {
 
   // 2. 处理 rotation 参数 (兼容角度 deg 和弧度 rad)
   let finalRotation = rotation;
-  if (Math.abs(rotation) > Math.PI * 2) {
+  if (rotationUnit === 'rad') {
+    finalRotation = rotation;
+  } else if (rotationUnit === 'deg') {
+    finalRotation = (rotation * Math.PI) / 180;
+  } else {
+    // 默认转换为弧度
     finalRotation = (rotation * Math.PI) / 180;
   }
 
