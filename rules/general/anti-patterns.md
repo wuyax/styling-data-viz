@@ -17,6 +17,7 @@
 | **3D 饼图 / 饼图切片过多** (> 5 块) | 视角失真，数据难以精确读出 | 替换为极简环形图 `radius: ['55%', '75%']` 或条形图 |
 | **硬编码固定 PX 布局** 缺乏 containLabel | 大屏缩放时文本切断被遮挡 | 设置 `containLabel: true` 并使用动态 fitPx |
 | **双 Y 轴网格线交织** 左右 Y 轴均开启 splitLine | 两套网格线错位网格线叠加 | **只保留左 Y 轴**的 `splitLine`，右 Y 轴设为 `show: false` |
+| **柱状图使用大圆角顶** `borderRadius: [4, 4, 0, 0]` | 产生低龄胶囊泡泡感，丧失大屏硬朗科技切面 | **默认不设 / 设为 0**；若极端需要微边缘过渡则上限为 `1` |
 | **无数据/空数据崩溃** 未设置默认空状态 | 页面显示空白框或报错 | 配置 `noData` 占位或设置默认初始 `[]` 数据 |
 
 ---
@@ -68,3 +69,24 @@ series: [{
   }
 }]
 ```
+
+### 反模式 4: 柱状图滥用大圆角
+```javascript
+// ❌ 错误代码
+itemStyle: { borderRadius: [4, 4, 0, 0] } // 滥用大弧度胶囊/泡泡圆角
+
+// ✅ 修正后代码
+itemStyle: {
+  // 保持大屏几何硬朗切面：默认不设 borderRadius（即 0），若极特殊需要软化最大不超过 1
+  borderWidth: 1.5,
+  borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    { offset: 0, color: 'rgba(18, 173, 253, 1.0)' },
+    { offset: 1, color: 'rgba(85, 146, 247, 0.6)' }
+  ]),
+  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    { offset: 0, color: 'rgba(18, 173, 253, 0.65)' },
+    { offset: 1, color: 'rgba(85, 146, 247, 0.15)' }
+  ])
+}
+```
+

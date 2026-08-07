@@ -113,11 +113,14 @@ flowchart TD
 #### 6. 容器动态自适应 (ResizeObserver)
 - 所有图表必须配置 `containLabel: true`，并绑定 `ResizeObserver` 防抖监听 DOM 容器变化（详见 [`rules/general/layout-and-responsive.md`](rules/general/layout-and-responsive.md)）。
 
+#### 7. 柱状图严禁大圆角 / 默认硬朗直角 (Strict Corner Radius Spec)
+- **柱状图必须保持硬朗几何结构**：严禁使用大圆角（如 `borderRadius: [4, 4, 0, 0]` 或大弧顶），大圆角在大屏科技感与国风视觉中显得低龄廉价。**默认必须设为硬朗直角**（不设置 `borderRadius` 或设为 `0`）；若极其特殊场景需要微弱边缘软化，**硬性规定 `borderRadius` 上限不得超过 `1`**（如 `borderRadius: 1` 或 `borderRadius: [1, 1, 0, 0]`）。
+
 ---
 
 ### ✨ 可选高级增强方案 (Optional High-Texture Enhancements)
 
-#### 7. 斜条纹纹理质感 (Stripe Texture Enhancements)
+#### 8. 斜条纹纹理质感 (Stripe Texture Enhancements)
 - **方案定位**：**可选/按需使用的高质感增强技术**，并非所有图表必须叠加。
 - **适用场景**：
   1. 用户明确提示需“科技全息”、“斜纹发光质感”、“高级细节”或“赛博朋克”视觉风格。
@@ -126,6 +129,7 @@ flowchart TD
 - **硬性搭配法则**：
   1. **斜条纹必带描边**：使用斜条纹时**必须同时配置 `borderWidth: 1 ~ 1.5` 的显式描边**，防止外轮廓发虚失焦。
   2. **边框渐变与高 Alpha**：若 `itemStyle.color` 为 `LinearGradient` 渐变填充，`borderColor` **也必须同步配置 `LinearGradient` 渐变**，且边框 Alpha 不透明度**必须显著高于填充色**（如边框 Alpha 0.8~1.0 vs 填充 Alpha 0.15~0.65），打造高发光轮廓切面。
+  3. **条纹跟随渐变法则**：当 `itemStyle` 为渐变填充时，`createAriaStripeDecal({...})` **严禁显式传递 `color` 参数**（保持 `color: undefined`），使斜条纹自动继承 `itemStyle` 的渐变色；不传 `color` 时 `gap` 默认设为 `[4, 6]`（线宽 4, 间距 6）为最佳视角。
 - **实现方案与优先级**：
   - **优先推荐 (Priority 1 - 单图层原生贴花)**：直接使用 ECharts 5+ 原生 `aria: createAriaStripeDecal(...)`，在单一 `series` 内同时享受 `itemStyle.color` 的渐变发光与贴花纹理（详见 [`references/ariaStripeDecal.ts`](references/ariaStripeDecal.ts)）。
   - **备选方案 (Priority 2 - 双图层 Pattern 重叠)**：使用底层渐变 + 顶层 `barGap: '-100%'` 的 `createStripePattern` 遮罩层（详见 [`rules/general/stripe-texture-and-gradients.md`](rules/general/stripe-texture-and-gradients.md) 与 [`references/stripePattern.ts`](references/stripePattern.ts)）。
@@ -142,6 +146,7 @@ flowchart TD
 | "为了让图表黑白对比更明显，设置 `backgroundColor: '#000'`" | 强制设置 `backgroundColor: 'transparent'`，确保完美融入外部 glassmorphism 卡片。 |
 | "环境中没有 `D-DIN` 字体，直接使用默认系统字体" | 关键数字必须配置字体回退栈 `'D-DIN, DINPro-Medium, monospace'` 并设置 `font-feature-settings: "tnum"`。 |
 | "边框使用纯单色描边，或没有设置边框" | 斜条纹图表必须配置显式边框，且填充为渐变时边框必须配置同调性 `LinearGradient` 且 Alpha 透明度显著高于填充色。 |
+| "为了让柱体顶部更柔和，设置 `borderRadius: [4, 4, 0, 0]` 大圆角" | 柱状图必须保持大屏硬朗几何切割。不建议使用圆角；若需微弱边缘软化，绝对严禁大圆角，`borderRadius` 最大仅允许设为 `1`（推荐设为 `0` 或不设）。 |
 | "容器尺寸似乎是固定的，不需要绑定 ResizeObserver" | 绝不能假设大屏尺寸不变，所有图表必须开启 `containLabel: true` 并防抖监听 resize。 |
 | "所有图表都强制加上斜条纹双图层" | 斜条纹属于高级可选增强方案，优先使用单图层 `aria.decal`，且 5 系列以上密集图表严禁使用，避免画面杂乱。 |
 | "为了展现科技感，把单图表入场动画设为 3s~5s 或齐刷刷无 delay 弹出" | 首屏入场必须控制在 `1.5s` 内（推荐 `animationDuration: 800ms`）并带交错 delay，避免全屏拖沓阻塞；常态低频呼吸（3s~6s）仅在入场完成后作用于重点节点。 |

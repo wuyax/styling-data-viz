@@ -43,10 +43,8 @@ import * as echarts from 'echarts';
 import { createAriaStripeDecal } from '../../references/ariaStripeDecal';
 
 const option = {
-  // 1. 全局开启 ARIA 斜条纹贴画 (参数可调)
+  // 1. 全局开启 ARIA 斜条纹贴画（当 itemStyle 为渐变时，不传 color，条纹自动跟随柱体/面积渐变，gap 默认为 [4, 6]）
   aria: createAriaStripeDecal({
-    color: 'rgba(255, 255, 255, 0.9)', // 清晰发光斜纹
-    gap: [2, 6],                        // [线宽 2px, 间距 6px]
     rotation: -45                       // -45 度斜条纹
   }),
 

@@ -8,7 +8,12 @@ export interface AriaStripeDecalOptions {
   enabled?: boolean;
   /** 是否显示贴花纹理 (默认 true) */
   show?: boolean;
-  /** 条纹/纹理线条颜色，如果 itemStyle 建议保持该参数为 undefined，以实现条纹的渐变效果 */
+  /** 
+   * 条纹/纹理线条颜色。
+   * 💡【最佳实践】：若 itemStyle 设置了 LinearGradient 渐变，强烈建议保持 color 为 undefined (不传该参数)，
+   * ECharts 将自动继承 itemStyle 的渐变色，实现斜条纹跟随柱体/面积一起渐变的高质感效果。
+   * 若 itemStyle 没有设置渐变 (单色场景)，则可显式传递 color 参数 (如 'rgba(255, 255, 255, 0.85)') 提升对比表达。
+   */
   color?: string;
   /** 背景填充颜色 (默认 'none'，背景透明以透出底层渐变) */
   backgroundColor?: string;
@@ -16,11 +21,14 @@ export interface AriaStripeDecalOptions {
   symbol?: string;
   /** 纹理符号缩放比例 (默认 1) */
   symbolSize?: number;
-  /** 条纹线条间距与宽度配置：可传入数值(间距)或 [线宽, 间距] (默认 [2, 6])，如果 color === undefined，设置为 [4, 6] 为宜 */
+  /** 
+   * 条纹线条间距与宽度配置：可传入数值(间距)或 [线宽, 间距]。
+   * 💡 当 color 未设置 (使用默认继承渐变色) 时，默认最佳间距为 [4, 6]；若显式指定了 color，默认间距为 [2, 6]。
+   */
   gap?: number | [number, number];
   /** X 轴方向 dash 阵列 (默认 [1, 0]) */
   dashArrayX?: (number | [number, number])[];
-  /** Y 轴方向 dash 阵列 (若未指定则自动根据 gap 参数生成，默认 [2, 6]) */
+  /** Y 轴方向 dash 阵列 (若未指定则自动根据 gap 参数生成) */
   dashArrayY?: (number | [number, number])[];
   /** 旋转角度 (支持角度 deg 如 -45，或弧度 rad，默认 -45°) */
   rotation?: number;
@@ -38,10 +46,9 @@ export interface AriaStripeDecalOptions {
  * ```typescript
  * import { createAriaStripeDecal } from './references/ariaStripeDecal';
  *
+ * // 1. itemStyle 为渐变色时：不传 color，条纹自动跟随 itemStyle 渐变，gap 默认为 [4, 6]
  * option = {
  *   aria: createAriaStripeDecal({
- *     color: 'rgba(255, 255, 255, 0.8)',
- *     gap: [2, 8],
  *     rotation: -45
  *   }),
  *   series: [{
@@ -51,6 +58,14 @@ export interface AriaStripeDecalOptions {
  *     },
  *     data: [120, 200, 150]
  *   }]
+ * };
+ *
+ * // 2. itemStyle 为单色时：可传递高亮 color 增强表达
+ * option = {
+ *   aria: createAriaStripeDecal({
+ *     color: 'rgba(255, 255, 255, 0.85)',
+ *     gap: [2, 6]
+ *   })
  * };
  * ```
  */
@@ -62,7 +77,7 @@ export const createAriaStripeDecal = (options: AriaStripeDecalOptions = {}) => {
     backgroundColor = 'none',
     symbol = 'rect',
     symbolSize = 1,
-    gap = [2, 6],
+    gap = color === undefined ? [4, 6] : [2, 6],
     dashArrayX = [1, 0],
     dashArrayY,
     rotation = -45,
