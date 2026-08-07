@@ -113,8 +113,19 @@ flowchart TD
 #### 6. 容器动态自适应 (ResizeObserver)
 - 所有图表必须配置 `containLabel: true`，并绑定 `ResizeObserver` 防抖监听 DOM 容器变化（详见 [`rules/general/layout-and-responsive.md`](rules/general/layout-and-responsive.md)）。
 
-#### 7. 柱状图严禁大圆角 / 默认硬朗直角 (Strict Corner Radius Spec)
-- **柱状图必须保持硬朗几何结构**：严禁使用大圆角（如 `borderRadius: [4, 4, 0, 0]` 或大弧顶），大圆角在大屏科技感与国风视觉中显得低龄廉价。**默认必须设为硬朗直角**（不设置 `borderRadius` 或设为 `0`）；若极其特殊场景需要微弱边缘软化，**硬性规定 `borderRadius` 上限不得超过 `1`**（如 `borderRadius: 1` 或 `borderRadius: [1, 1, 0, 0]`）。
+#### 7. 适度圆角与精细轮廓法则 (Global Corner Radius & Thin-Ring Silhouette Spec - 适用于所有图表)
+- **硬朗几何大原则**：在大屏/科技/国风视觉体系中，**严禁使用大圆角或膨胀弧头**，圆角过大会使图形丧失工业几何张力与精细感，显得低龄廉价。
+  - **柱状图 (Bar)**：**默认必须设为硬朗直角**（`borderRadius: 0`）；若需极微弱边缘软化，上限**不得超过 `1`**（如 `borderRadius: [1, 1, 0, 0]`）。
+  - **饼图/环形图切片 (Pie Sector)**：切片端点仅允许**极微弱倒角（Micro Radius: `1 ~ 3`，推荐 `2`）**。在薄环厚（10%~12%）下，过大圆角（如 $\ge 4$）会导致端点变成圆滚滚的半圆药丸头，必须保持高精度激光切割硬朗感（Laser Cut Edge）。
+  - **环形图厚度 (Ring Thickness)**：外径与内径差值（$\Delta R = R_{outer} - R_{inner}$）**不宜过厚**，推荐控制在 **`10% ~ 12%`**（例如 `['60%', '71%']`），保留轻盈精致感与充足的中心空间。
+  - **容器卡片与 UI 元素**：容器微圆角统一控制在 `4px ~ 6px`。
+
+#### 8. 饼图 / 环形图高级感生成原则 (Premium Donut/Pie Chart Specs)
+- **悬浮切片、极微倒角与间隙 (Pad Angle, Micro Radius & Thin Ring)**：扇区切片之间**强制配置 `padAngle: 5 ~ 8` 物理断开**；切面应用极微倒角（`borderRadius: 1 ~ 3`，推荐 `2`）与轻盈环厚（环厚 $\le 12\%$），呈现高精度激光切割卡块感。
+- **内外双极同心轨迹线 (Exposed Double Track Rings)**：避免背景暗轨被主切片遮盖（Bug 1 修复），严禁暗轨与主切片半径重合。配置 `['52%', '52.5%']` 内轨与 `['66.5%', '67%']` 外轨将主切片夹在中间，在扇区缝隙完美透出双同心线。
+- **统一坐标与中心偏离防护 (Unified CenterX & Glow Protection)**：在包含右侧 Legend 时（Bug 3 & 4 修复），主圆环中心左移至 `center: ['32%', '50%']`，`radius` 适当收缩（如 `['54%', '65%']`）防止重叠；**关键：`title.left` 与 `graphic.position` 必须强制联动设为相同的 `centerX`（如 `'32%'`）**，严禁留默认 `'50%'` 导致光晕右偏。
+- **结构化右侧图例与防污染 (Precision Legend & Filter)**：图例首选右侧纵向排列 (`orient: 'vertical'`)，使用微型正方形 `icon: 'rect'`；利用 `formatter` 实现 `[名称] + [大号等宽百分比]` 列对齐；**必须显式定义 `legend.data`** 仅包含真实业务名称，防止辅助 Ticks / Track 污染图例。
+- **工业级刻度盘增强 (Industrial Gauge Ticks)**：内圈刻度加长加粗（`axisTick.length: 8`, `width: 1.5`, `splitNumber: 60`），提升硬朗工控感（详见 [`rules/general/pie-and-donut-spec.md`](rules/general/pie-and-donut-spec.md)）。
 
 ---
 
@@ -152,6 +163,8 @@ flowchart TD
 | "容器尺寸似乎是固定的，不需要绑定 ResizeObserver" | 绝不能假设大屏尺寸不变，所有图表必须开启 `containLabel: true` 并防抖监听 resize。 |
 | "所有图表都强制加上斜条纹双图层" | 斜条纹属于高级可选增强方案，优先使用单图层 `aria.decal`，且 5 系列以上密集图表严禁使用，避免画面杂乱。 |
 | "为了展现科技感，把单图表入场动画设为 3s~5s 或齐刷刷无 delay 弹出" | 首屏入场必须控制在 `1.5s` 内（推荐 `animationDuration: 800ms`）并带交错 delay，避免全屏拖沓阻塞；常态低频呼吸（3s~6s）仅在入场完成后作用于重点节点。 |
+| "饼图/环形图扇区没必要加间隔，直接无缝相连即可" | 环形图切片必须配置 `padAngle: 5~8` 物理间隔与 `itemStyle.borderRadius: 6~8` 胶囊化平滑端点，且叠加底层贯通暗轨，严禁无缝死板粘连。 |
+| "环形图中心空着挺好看，不需要额外的底盘或文字" | 环形图中心严禁留空，必须配置半透明渐变底盘（RadialGradient）与大号等宽 KPI 数值及次级标题，形成视觉锚点。 |
 
 ---
 
@@ -167,6 +180,7 @@ flowchart TD
   - `themes/huanzi-theme.json` —— 「幻紫」 Theme Builder 文件
 - **细则指南 (`rules/`)**：
   - **通用规范 (`rules/general/`)**：
+    - `pie-and-donut-spec.md` —— 饼图/环形图高级感配置规范 (胶囊切片、贯通暗轨、中心玻璃底罩)
     - `stripe-texture-and-gradients.md` —— 斜条纹与渐变质感规范
     - `echarts-spec.md` —— ECharts 5 / 6+ 配置项最佳实践
     - `animation-and-rhythm.md` —— 动画与视觉节奏规范 (入场 $\le$ 1.5s~2s、交错算法与常态微动)
@@ -188,6 +202,7 @@ flowchart TD
 
 - [ ] **风格匹配**：正确匹配了 `qunqing`、`guofeng` 或 `huanzi` 风格及对应调色盘。
 - [ ] **渐变填充与描边**：所有面积图与柱状图均配置了 `LinearGradient` 衰减渐变（禁止平涂实色）；若有描边，描边同步使用高 Alpha 不透明度 `LinearGradient`。
+- [ ] **饼图/环形图高级感**：扇区配置了 `padAngle: 5~8` 物理间隔与 `borderRadius: 6~8` 平滑端点；配置了底层半透贯通暗轨（Track Ring）；中心叠加了渐变底罩与等宽 KPI 数值；引导标签使用纵向三层 Rich 格式。
 - [ ] **斜条纹与边框搭配**：斜条纹图表显式配置了 `borderWidth: 1 ~ 1.5` 描边；优先配置单图层 `aria: createAriaStripeDecal(...)`。
 - [ ] **背景透明**：`backgroundColor` 设置为 `'transparent'`。
 - [ ] **轴线降噪**：顶部与右侧坐标轴已关闭（`show: false`），横向网格透明度低于 `5%`。
