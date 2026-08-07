@@ -43,7 +43,6 @@ styling-data-viz/
 ├── references/                      # 静态资源与工具函数
 │   ├── ariaStripeDecal.ts           # [优先推荐] ECharts 5+ ARIA 单图层斜纹贴画生成器
 │   ├── stripePattern.ts             # [备选方案] 无缝斜条纹 Pattern 生成器
-│   ├── qunqing-theme.json           # [兼容向后] 「群青」主题 JSON
 │   └── themes/                      # 多风格 Theme 目录
 │       ├── qunqing-theme.json       # 「群青」 Theme Builder 文件
 │       ├── guofeng-theme.json       # 「国风」 Theme Builder 文件

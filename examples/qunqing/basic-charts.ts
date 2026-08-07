@@ -178,3 +178,55 @@ export const getDoughnutKpiOption = (title = '核心负载', value = '78.5%', li
     })
   }]
 });
+
+// ============================================================================
+// 4. 多维雷达图 (Multi-dimensional Radar Chart)
+// ============================================================================
+export const getRadarOption = (): EChartsOption => ({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'item' },
+  legend: {
+    top: '2%',
+    right: '2%',
+    icon: 'circle',
+    textStyle: { color: '#8299b1', fontSize: 12 }
+  },
+  radar: {
+    shape: 'polygon',
+    center: ['50%', '55%'],
+    radius: '65%',
+    indicator: [
+      { name: '安全防护', max: 100 },
+      { name: '响应速度', max: 100 },
+      { name: '并发支撑', max: 100 },
+      { name: '稳定可用', max: 100 },
+      { name: '资源利用', max: 100 }
+    ],
+    axisName: { color: '#8299b1', fontSize: 12 },
+    splitLine: { lineStyle: { color: 'rgba(205, 225, 248, 0.1)' } },
+    splitArea: { show: false },
+    axisLine: { lineStyle: { color: 'rgba(205, 225, 248, 0.15)' } }
+  },
+  series: [{
+    type: 'radar',
+    data: [
+      {
+        value: [90, 85, 95, 88, 75],
+        name: '本月综合指标',
+        symbol: 'none',
+        itemStyle: { color: '#12adfd' },
+        lineStyle: { width: 2, color: '#12adfd' },
+        areaStyle: { color: 'rgba(18, 173, 253, 0.25)' }
+      },
+      {
+        value: [70, 75, 80, 70, 65],
+        name: '上月基准',
+        symbol: 'none',
+        itemStyle: { color: '#83aad8' },
+        lineStyle: { width: 1.5, type: 'dashed', color: '#83aad8' },
+        areaStyle: { color: 'rgba(131, 170, 216, 0.1)' }
+      }
+    ]
+  }]
+});
+

@@ -1,5 +1,5 @@
 /**
- * 大屏特效图表模板 (Effect Screen Charts)
+ * 「群青」大屏特效图表模板 (Effect Ultranavy Screen Charts)
  * 包含：折柱混合双轴图、象形柱图 (PictorialBar)、仪表盘与水球图
  */
 

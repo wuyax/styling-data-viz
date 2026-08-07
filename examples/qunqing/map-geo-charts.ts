@@ -1,5 +1,5 @@
 /**
- * 大屏空间地理与数据密集图表模板 (Map & Data-Dense Screen Charts)
+ * 「群青」大屏空间地理与数据密集图表模板 (Map & Data-Dense Ultranavy Screen Charts)
  * 包含：2D 地图 + 飞线 (Geo Map Lines)、大屏热力图 (Heatmap)、桑基图 (Sankey)
  */
 
