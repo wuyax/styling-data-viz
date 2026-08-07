@@ -24,7 +24,7 @@ export const createStripePattern = (options: StripePatternOptions) => {
     mainColor = 'rgba(255, 255, 255, 0.35)',
     bgColor = 'transparent',
     angle = 45,
-    density = 'medium',
+    density = 'dense',
     lineWidth = 2
   } = options;
 

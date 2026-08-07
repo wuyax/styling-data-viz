@@ -1,47 +1,107 @@
-# 大屏斜条纹与双图层复合渐变规范 (Stripe Texture & Compound Gradients)
+# 大屏斜条纹与渐变质感规范 (Stripe Texture & Gradients)
 
-本规范总结了在高质感暗色大屏中，如何实现**“色彩渐变 + 科技斜条纹”**双重叠加的像素级微调法则。
-
----
-
-## 1. 核心设计痛点与解决方案
-
-### ❌ 痛点：单图层 `color` 互相排斥
-在 ECharts 中，直接在 `itemStyle.color` 或 `areaStyle.color` 赋给 Canvas Pattern 时，原有的 `LinearGradient` 颜色渐变会被取代；而如果使用纯色 Pattern，底色过浓会把斜线掩盖。
-
-### ✅ 解决方案：双图层复合叠加 (Compound Dual-Layer Overlay)
-通过叠加两个属性相同或互补的 Series：
-- **底层 (Base Series)**：配置 **低透明度的 `LinearGradient` 颜色渐变**，提供柔和发光衬底；**必须设置 `borderColor` 与当前系列的发光主色保持一致**（如 `borderColor: '#12adfd'`, `borderWidth: 1.5`），用于硬朗地勾勒出柱体结构边界。
-- **顶层 (Stripe Series)**：配置 **100% 背景透明 (`bgColor: 'transparent'`) 的斜条纹 Pattern**，呈现出精细发光的斜纹。
-
-工具函数位置：[`references/stripePattern.ts`](../../references/stripePattern.ts)
+本规范总结了在高质感暗色大屏中，如何实现**“色彩渐变 + 科技斜条纹”**视觉叠加的最佳实践。
 
 ---
 
-## 2. 柱状图双层叠加范例 (Bar Chart Layering)
+## 1. 核心搭配法则 (Core Pairing Rules)
 
-使用 `barGap: '-100%'` 将斜纹层精准重叠于渐变层之上，底层显式配置系列同色 `borderColor`：
+在大屏中应用斜条纹与渐变质感时，必须严格遵守以下两条硬朗视觉法则：
+
+### 🔹 法则一：斜条纹必带硬朗描边 (Stripe + Outline Pairing)
+斜条纹纹理会打散图形边缘的实色视觉感知。为了防止图表在暗色大屏中失焦发虚，**配置斜条纹时必须同时配置 `borderWidth: 1 ~ 1.5` 的显式描边**，用清晰的切面勾勒几何结构。
+
+### 🔹 法则二：边框同步渐变 & 高不透明度 (Gradient Border with Higher Alpha)
+- **边框渐变同构**：当 `itemStyle.color` 使用 `LinearGradient` 渐变填充时，`borderColor` **也必须同步配置同方向/同色调的 `LinearGradient` 渐变**。
+- **不透明度阶梯**：`borderColor` 各 Stop 点的 Alpha 不透明度**必须显著高于**填充色 `color`（如边框 0.8~1.0 vs 填充 0.15~0.65）。通过“高亮度硬朗边框 + 半透明底色填充”，让斜条纹在透光填充中清晰呈现，同时强化科技轮廓线。
+
+---
+
+## 2. 方案选型指南 (Solution Matrix)
+
+在大屏中为图表添加斜条纹质感时，有两种实现路径：
+
+| 方案维度 | **方案一：单图层 ARIA Decal 原生纹理 (优先推荐 ⭐⭐⭐⭐⭐)** | **方案二：双图层 Canvas Pattern 复合重叠 (备选/旧版本兼容)** |
+|---|---|---|
+| **技术原理** | 开启 ECharts 5+ 原生 `aria.decal` 矢量贴花，单图层直接同时设置渐变 `itemStyle.color` 和 `aria.decal` | 叠加两个重叠的 `series`（底层做渐变，顶层用 `barGap: '-100%'` + Canvas Pattern） |
+| **系列层级** | **单图层 (`1 series`)** | **双图层 (`2 series`)** |
+| **代码量/维护** | ⭐⭐⭐⭐⭐ 极简，无需重复定义系列数据 | ⭐⭐⭐ 较繁琐，需数据同步和关闭顶层 Tooltip |
+| **交互与性能** | ⭐⭐⭐⭐⭐ Tooltip/Legend 响应完美，无重叠层碰撞 | ⭐⭐⭐ 需处理顶层 `tooltip: { show: false }` |
+| **工具函数** | [`references/ariaStripeDecal.ts`](../../references/ariaStripeDecal.ts) | [`references/stripePattern.ts`](../../references/stripePattern.ts) |
+
+---
+
+## 3. 方案一：单图层 ARIA Decal 原生纹理 (优先推荐)
+
+### 💡 核心原理
+在 ECharts 5+ 中，开启 `aria.decal` 后，图表可以在保持 `itemStyle.color` 为 `LinearGradient` 渐变填充的同时，原生叠加矢量贴图（Decal）。只要将贴花的 `backgroundColor` 设为 `'none'` 并使用半透明/高亮线条，纹理即可无缝叠加于渐变之上。
+
+### 🛠️ 工具函数与范例
+
+```typescript
+import * as echarts from 'echarts';
+import { createAriaStripeDecal } from '../../references/ariaStripeDecal';
+
+const option = {
+  // 1. 全局开启 ARIA 斜条纹贴画 (参数可调)
+  aria: createAriaStripeDecal({
+    color: 'rgba(255, 255, 255, 0.9)', // 清晰发光斜纹
+    gap: [2, 6],                        // [线宽 2px, 间距 6px]
+    rotation: -45                       // -45 度斜条纹
+  }),
+
+  // 2. 单图层柱状图：填充渐变 + 高 Alpha 渐变边框
+  series: [
+    {
+      name: '数据值',
+      type: 'bar',
+      barWidth: '40%',
+      itemStyle: {
+        borderRadius: [4, 4, 0, 0],
+        borderWidth: 1.5,
+        // 规则二：borderColor 也使用渐变，且 Alpha 透明度显著高于填充色
+        borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: 'rgba(18, 173, 253, 1.0)' },  // 顶部高亮边框 100%
+          { offset: 1, color: 'rgba(85, 146, 247, 0.6)' }   // 底部边框 60%
+        ]),
+        // 填充色：Alpha 透明度较低，衬托斜条纹与高亮边框
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          { offset: 0, color: 'rgba(18, 173, 253, 0.65)' }, // 顶部填充 65%
+          { offset: 1, color: 'rgba(85, 146, 247, 0.15)' }  // 底部填充 15%
+        ])
+      },
+      data: [120, 200, 150, 80]
+    }
+  ]
+};
+```
+
+---
+
+## 4. 方案二：双图层 Canvas Pattern 复合重叠 (备选/兼容方案)
+
+### 💡 适用场景
+当需要使用复杂自定义 Canvas 绘制图形（非标准矢量线条）或兼容旧版 ECharts 时使用。
+
+### 🛠️ 柱状图双层重叠范例
 
 ```typescript
 import { createStripePattern } from '../../references/stripePattern';
 
 series: [
-  // 1. 底层：适当降低 Alpha 透明度的色彩渐变层
+  // 1. 底层：发光渐变填充 + 高 Alpha 渐变边框
   {
     name: '数据值',
     type: 'bar',
     barWidth: '40%',
-    showBackground: true,
-    backgroundStyle: {
-      color: 'rgba(205, 225, 248, 0.03)',
-      borderColor: 'rgba(18, 173, 253, 0.15)',
-      borderWidth: 1
-    },
     itemStyle: {
       borderWidth: 1.5,
-      borderColor: '#12adfd',
-      color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-        { offset: 0, color: 'rgba(18, 173, 253, 0.45)' },  // 调低透明度，凸显斜条纹
+      borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        { offset: 0, color: 'rgba(18, 173, 253, 0.9)' },
+        { offset: 1, color: 'rgba(85, 146, 247, 0.5)' }
+      ]),
+      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        { offset: 0, color: 'rgba(18, 173, 253, 0.45)' },
         { offset: 1, color: 'rgba(85, 146, 247, 0.15)' }
       ])
     },
@@ -53,15 +113,14 @@ series: [
     type: 'bar',
     barWidth: '40%',
     barGap: '-100%',
-    showBackground: false,
     tooltip: { show: false },
     legendHoverLink: false,
     itemStyle: {
       color: createStripePattern({
-        mainColor: 'rgba(255, 255, 255, 0.35)', // 清晰发光细线条
-        bgColor: 'transparent',                // 100% 透明背景
-        angle: 45,                             // 默认 45°
-        lineWidth: 2                           // 默认 2px
+        mainColor: 'rgba(255, 255, 255, 0.35)',
+        bgColor: 'transparent',
+        angle: 45,
+        lineWidth: 2
       })
     },
     data: scores
@@ -71,67 +130,14 @@ series: [
 
 ---
 
-## 3. 折线图双层全息面积范例 (Line Chart Layering)
+## 5. 几何无缝平铺推导公式 (Seamless Pattern Geometry)
 
-使用双折线面积层打造 **全息投影网格 (Holographic Grid)**：
-
-```typescript
-series: [
-  // 1. 主折线：发光线 + 垂直衰减渐变面积
-  {
-    name: '流量趋势',
-    type: 'line',
-    smooth: 0.35,
-    showSymbol: true,
-    symbol: 'circle',
-    symbolSize: 6,
-    itemStyle: { color: '#12adfd', borderColor: '#ffffff', borderWidth: 2 },
-    lineStyle: {
-      width: 3,
-      color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-        { offset: 0, color: '#11c3dd' },
-        { offset: 1, color: '#12adfd' }
-      ]),
-      shadowColor: 'rgba(18, 173, 253, 0.65)',
-      shadowBlur: 14
-    },
-    areaStyle: {
-      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-        { offset: 0, color: 'rgba(18, 173, 253, 0.40)' },
-        { offset: 1, color: 'rgba(18, 173, 253, 0.00)' }
-      ])
-    },
-    data: lineData
-  },
-  // 2. 叠加层：透明背景的无缝斜条纹 Pattern
-  {
-    name: '流量趋势',
-    type: 'line',
-    smooth: 0.35,
-    showSymbol: false,
-    tooltip: { show: false },
-    lineStyle: { opacity: 0 },
-    areaStyle: {
-      color: createStripePattern({
-        mainColor: 'rgba(255, 255, 255, 0.15)',
-        bgColor: 'transparent',
-        angle: 45
-      })
-    },
-    data: lineData
-  }
-]
-```
-
----
-
-## 4. 几何无缝平铺推导公式 (Seamless Pattern Geometry)
-
-为了防止 Canvas Tile 在平铺时产生一节一节的接缝断层：
+为了防止 Canvas Pattern / ARIA Tile 在平铺时产生一节一节的接缝断层：
 1. **宽高约束**：单元格宽高必须严格满足 $\tan(\theta) = H / W$。
-2. **三线补缝**：在 Tile 内必须包含：
+2. **三线补缝**：在 Canvas Tile 内需包含：
    - 主斜线：`(0, H) ➔ (W, 0)`
    - 左上角补线：`(-W/2, H/2) ➔ (W/2, -H/2)`
    - 右下角补线：`(W/2, 3H/2) ➔ (3W/2, H/2)`
 
 如此绘制可在 2D 网格重复时形成 **100% 无缝无限延伸斜线**。
+

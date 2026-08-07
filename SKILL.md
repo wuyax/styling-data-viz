@@ -43,7 +43,7 @@ flowchart TD
     GuoFeng --> DensityCheck
     HuanZi --> DensityCheck
 
-    DensityCheck -- "是 (重点/单柱/单折线)" --> DualLayer[采用双图层渐变 + 斜条纹 Stripe Overlay]
+    DensityCheck -- "是 (重点/单柱/单折线)" --> DualLayer[采用单图层 ARIA 斜条纹/双图层 Overlay]
     DensityCheck -- "否 (多系列/密集数据)" --> SingleLayer[采用单图层 LinearGradient 渐变填充]
 
     DualLayer --> FinalCode[遵循对应风格 Token 生成 ECharts 配置]
@@ -70,11 +70,19 @@ flowchart TD
 // ❌ 反模式：平涂纯实色、硬黑背景、强坐标轴杂线
 { backgroundColor: '#000000', series: [{ type: 'bar', itemStyle: { color: '#12adfd' } }] }
 
-// ✅ 正确规范：透明融入背景、渐变光晕衰减、超淡降噪网格
+// ✅ 正确规范：透明融入背景、渐变光晕衰减、高 Alpha 渐变描边、超淡降噪网格
 {
   backgroundColor: 'transparent',
+  aria: createAriaStripeDecal({ color: 'rgba(255, 255, 255, 0.9)', gap: [2, 6] }),
   yAxis: { splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.05)' } } },
-  series: [{ type: 'bar', itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: '#12adfd' }, { offset: 1, color: 'rgba(18, 173, 253, 0.05)' }]) } }]
+  series: [{
+    type: 'bar',
+    itemStyle: {
+      borderWidth: 1.5,
+      borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(18, 173, 253, 1.0)' }, { offset: 1, color: 'rgba(85, 146, 247, 0.6)' }]),
+      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(18, 173, 253, 0.65)' }, { offset: 1, color: 'rgba(85, 146, 247, 0.15)' }])
+    }
+  }]
 }
 ```
 
@@ -109,15 +117,18 @@ flowchart TD
 
 ### ✨ 可选高级增强方案 (Optional High-Texture Enhancements)
 
-#### 7. 双图层复合斜条纹质感 (Compound Dual-Layer Overlay)
+#### 7. 斜条纹纹理质感 (Stripe Texture Enhancements)
 - **方案定位**：**可选/按需使用的高质感增强技术**，并非所有图表必须叠加。
 - **适用场景**：
   1. 用户明确提示需“科技全息”、“斜纹发光质感”、“高级细节”或“赛博朋克”视觉风格。
-  2. 大屏核心核心指示器、单柱/单折线重点 Hero 图表。
+  2. 大屏核心指示器、单柱/单折线重点 Hero 图表。
 - **避免场景**：5 系列以上密集型数据柱图、常规多折线对比图（使用单层 `LinearGradient` 即可，避免画面过度杂乱或产生视觉噪音）。
-- **技术实现与边框要求**：
-  - **底层 (Base Series)**：低透明度 `LinearGradient` 颜色渐变，提供柔和衬底。**必须配置与系列同调性/高亮色一致的外边框 (`borderWidth: 1 ~ 1.5` 与 `borderColor: '<系列发光主色>'`)**，用清晰硬朗的轮廓线条勾勒出图表结构。
-  - **顶层 (Stripe Series)**：`barGap: '-100%'` 或重叠面积层，配合 `bgColor: 'transparent'` 的斜条纹 Pattern（详见 [`rules/general/stripe-texture-and-gradients.md`](rules/general/stripe-texture-and-gradients.md) 与 [`references/stripePattern.ts`](references/stripePattern.ts)）。
+- **硬性搭配法则**：
+  1. **斜条纹必带描边**：使用斜条纹时**必须同时配置 `borderWidth: 1 ~ 1.5` 的显式描边**，防止外轮廓发虚失焦。
+  2. **边框渐变与高 Alpha**：若 `itemStyle.color` 为 `LinearGradient` 渐变填充，`borderColor` **也必须同步配置 `LinearGradient` 渐变**，且边框 Alpha 不透明度**必须显著高于填充色**（如边框 Alpha 0.8~1.0 vs 填充 Alpha 0.15~0.65），打造高发光轮廓切面。
+- **实现方案与优先级**：
+  - **优先推荐 (Priority 1 - 单图层原生贴花)**：直接使用 ECharts 5+ 原生 `aria: createAriaStripeDecal(...)`，在单一 `series` 内同时享受 `itemStyle.color` 的渐变发光与贴花纹理（详见 [`references/ariaStripeDecal.ts`](references/ariaStripeDecal.ts)）。
+  - **备选方案 (Priority 2 - 双图层 Pattern 重叠)**：使用底层渐变 + 顶层 `barGap: '-100%'` 的 `createStripePattern` 遮罩层（详见 [`rules/general/stripe-texture-and-gradients.md`](rules/general/stripe-texture-and-gradients.md) 与 [`references/stripePattern.ts`](references/stripePattern.ts)）。
 
 ---
 
@@ -130,8 +141,9 @@ flowchart TD
 | "简单图表用单色 `color: '#12adfd'` 填充更快" | 默认必须配置 `LinearGradient` 渐变，单色平涂大面积色块在大屏上显得廉价缺乏质感。 |
 | "为了让图表黑白对比更明显，设置 `backgroundColor: '#000'`" | 强制设置 `backgroundColor: 'transparent'`，确保完美融入外部 glassmorphism 卡片。 |
 | "环境中没有 `D-DIN` 字体，直接使用默认系统字体" | 关键数字必须配置字体回退栈 `'D-DIN, DINPro-Medium, monospace'` 并设置 `font-feature-settings: "tnum"`。 |
+| "边框使用纯单色描边，或没有设置边框" | 斜条纹图表必须配置显式边框，且填充为渐变时边框必须配置同调性 `LinearGradient` 且 Alpha 透明度显著高于填充色。 |
 | "容器尺寸似乎是固定的，不需要绑定 ResizeObserver" | 绝不能假设大屏尺寸不变，所有图表必须开启 `containLabel: true` 并防抖监听 resize。 |
-| "所有图表都强制加上斜条纹双图层" | 斜条纹属于高级可选增强方案，5 系列以上密集图表严禁使用，避免画面杂乱。 |
+| "所有图表都强制加上斜条纹双图层" | 斜条纹属于高级可选增强方案，优先使用单图层 `aria.decal`，且 5 系列以上密集图表严禁使用，避免画面杂乱。 |
 
 ---
 
@@ -140,13 +152,14 @@ flowchart TD
 - **Skill 核心入口**：`SKILL.md`
 - **项目说明**：`README.md`
 - **静态参考与工具函数 (`references/`)**：
+  - `ariaStripeDecal.ts` —— **[优先推荐]** ECharts 5+ 原生 ARIA 单图层斜条纹贴花生成器 (TypeScript 导出)
   - `stripePattern.ts` —— 无缝科技斜条纹 Pattern 动态生成工具 (TypeScript 导出)
   - `themes/qunqing-theme.json` —— 「群青」 Theme Builder 文件
   - `themes/guofeng-theme.json` —— 「国风」 Theme Builder 文件
   - `themes/huanzi-theme.json` —— 「幻紫」 Theme Builder 文件
 - **细则指南 (`rules/`)**：
   - **通用规范 (`rules/general/`)**：
-    - `stripe-texture-and-gradients.md` —— 斜条纹与双图层复合渐变微调规范
+    - `stripe-texture-and-gradients.md` —— 斜条纹与渐变质感规范
     - `echarts-spec.md` —— ECharts 5 / 6+ 配置项最佳实践
     - `layout-and-responsive.md` —— ResizeObserver 容器自适应与 Vue 3 集成范例
     - `anti-patterns.md` —— 踩坑反模式与自动修复指南
@@ -165,10 +178,9 @@ flowchart TD
 ## 验证检查清单 Validation Checklist
 
 - [ ] **风格匹配**：正确匹配了 `qunqing`、`guofeng` 或 `huanzi` 风格及对应调色盘。
-- [ ] **渐变填充**：所有面积图与柱状图均配置了 `LinearGradient` 衰减渐变（禁止平涂实色）。
-- [ ] **斜条纹按需配置**：重点 Hero 图表或高质感场景按需配置了双图层斜条纹 (`barGap: '-100%'` + `createStripePattern`)；密集/多系列图表保持单层渐变。
+- [ ] **渐变填充与描边**：所有面积图与柱状图均配置了 `LinearGradient` 衰减渐变（禁止平涂实色）；若有描边，描边同步使用高 Alpha 不透明度 `LinearGradient`。
+- [ ] **斜条纹与边框搭配**：斜条纹图表显式配置了 `borderWidth: 1 ~ 1.5` 描边；优先配置单图层 `aria: createAriaStripeDecal(...)`。
 - [ ] **背景透明**：`backgroundColor` 设置为 `'transparent'`。
 - [ ] **轴线降噪**：顶部与右侧坐标轴已关闭（`show: false`），横向网格透明度低于 `5%`。
 - [ ] **等宽数字**：关键 KPI 及轴线数字包含 `fontFamily: 'D-DIN, DINPro-Medium, monospace'`。
 - [ ] **容器自适应**：图表绑定了 `ResizeObserver` 防抖 resize，且开启 `containLabel: true`。
-
