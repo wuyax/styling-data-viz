@@ -1,6 +1,6 @@
 /**
  * 「群青」大屏基础图表模板 (Basic Ultranavy Screen Charts)
- * 包含：平滑渐变面积折线图、胶囊圆角柱状图、KPI 环形饼图、多维雷达图
+ * 包含：平滑渐变面积折线图、渐变柱状图、KPI 环形饼图、多维雷达图
  */
 
 import * as echarts from 'echarts';
@@ -67,7 +67,7 @@ export const getSmoothLineOption = (data = {
 });
 
 // ============================================================================
-// 2. 胶囊圆角柱状图 (Capsule Rounded Bar Chart with Background)
+// 2. 渐变柱状图 (Gradated Bar Chart with Background)
 // ============================================================================
 export const getCapsuleBarOption = (data = {
   categories: ['全华东', '华南区', '华北区', '西南区', '西北区'],

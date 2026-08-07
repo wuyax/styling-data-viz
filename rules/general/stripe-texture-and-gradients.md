@@ -57,7 +57,6 @@ const option = {
       type: 'bar',
       barWidth: '40%',
       itemStyle: {
-        borderRadius: [4, 4, 0, 0],
         borderWidth: 1.5,
         // 规则二：borderColor 也使用渐变，且 Alpha 透明度显著高于填充色
         borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [

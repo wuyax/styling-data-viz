@@ -1,6 +1,6 @@
 /**
  * 「国风」水墨青绿大屏基础图表模板 (Basic Guofeng Screen Charts)
- * 包含：水墨青绿面积折线图、竹节/翡翠渐变柱图、中式水波环形 KPI 图、青绿多维雷达图
+ * 包含：水墨青绿面积折线图、翡翠渐变柱图、中式水波环形 KPI 图、青绿多维雷达图
  */
 
 import * as echarts from 'echarts';
@@ -69,7 +69,7 @@ export const getGuofengSmoothLineOption = (data = {
 });
 
 // ============================================================================
-// 2. 翡翠/鎏金双色胶囊柱图 (Guofeng Jade & Gold Bar Chart)
+// 2. 翡翠/鎏金双色渐变柱图 (Guofeng Jade & Gold Bar Chart)
 // ============================================================================
 export const getGuofengBarOption = (data = {
   categories: ['产品一', '产品二', '产品三', '产品四'],

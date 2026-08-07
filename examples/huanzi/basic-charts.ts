@@ -1,6 +1,6 @@
 /**
  * 「幻紫」赛博霓虹大屏基础图表模板 (Basic Huanzi Cyber Screen Charts)
- * 包含：电光蓝紫渐变折线图、胶囊粉紫柱状图、多层霓虹 KPI 环形图、幻紫多维雷达图
+ * 包含：电光蓝紫渐变折线图、粉紫渐变柱状图、多层霓虹 KPI 环形图、幻紫多维雷达图
  */
 
 import * as echarts from 'echarts';
@@ -69,7 +69,7 @@ export const getHuanziSmoothLineOption = (data = {
 });
 
 // ============================================================================
-// 2. 胶囊粉紫柱状图 (Huanzi Neon Bar Chart)
+// 2. 粉紫渐变柱状图 (Huanzi Neon Bar Chart)
 // ============================================================================
 export const getHuanziBarOption = (data = {
   categories: ['咸阳市', '渭南市', '安康市', '汉中市', '榆林市'],
