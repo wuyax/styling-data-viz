@@ -57,7 +57,6 @@ export const createKpiRingOption = (config: KpiRingConfig): EChartsOption => ({
     center: ['50%', '48%'],
     avoidLabelOverlap: true,
     itemStyle: {
-      borderRadius: 4,
       borderColor: config.borderColor,
       borderWidth: 3
     },

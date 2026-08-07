@@ -154,7 +154,7 @@ export const getHeatmapOption = (): EChartsOption => {
       type: 'heatmap',
       data: data,
       label: { show: false },
-      itemStyle: { borderRadius: 2, borderColor: 'rgba(3, 7, 18, 0.8)', borderWidth: 1 }
+      itemStyle: { borderColor: 'rgba(3, 7, 18, 0.8)', borderWidth: 1 }
     }]
   };
 };

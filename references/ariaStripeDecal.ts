@@ -8,7 +8,7 @@ export interface AriaStripeDecalOptions {
   enabled?: boolean;
   /** 是否显示贴花纹理 (默认 true) */
   show?: boolean;
-  /** 条纹/纹理线条颜色 (默认 'rgba(255, 255, 255, 0.25)') */
+  /** 条纹/纹理线条颜色，如果 itemStyle 建议保持该参数为 undefined，以实现条纹的渐变效果 */
   color?: string;
   /** 背景填充颜色 (默认 'none'，背景透明以透出底层渐变) */
   backgroundColor?: string;
@@ -16,7 +16,7 @@ export interface AriaStripeDecalOptions {
   symbol?: string;
   /** 纹理符号缩放比例 (默认 1) */
   symbolSize?: number;
-  /** 条纹线条间距与宽度配置：可传入数值(间距)或 [线宽, 间距] (默认 [2, 6]) */
+  /** 条纹线条间距与宽度配置：可传入数值(间距)或 [线宽, 间距] (默认 [2, 6])，如果 color === undefined，设置为 [4, 6] 为宜 */
   gap?: number | [number, number];
   /** X 轴方向 dash 阵列 (默认 [1, 0]) */
   dashArrayX?: (number | [number, number])[];
@@ -58,7 +58,7 @@ export const createAriaStripeDecal = (options: AriaStripeDecalOptions = {}) => {
   const {
     enabled = true,
     show = true,
-    color = 'rgba(255, 255, 255, 0.9)',
+    color,
     backgroundColor = 'none',
     symbol = 'rect',
     symbolSize = 1,

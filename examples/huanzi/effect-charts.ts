@@ -93,7 +93,6 @@ export const getHuanziMultiRingOption = (data = [
     roseType: 'radius',
     label: { show: false },
     itemStyle: {
-      borderRadius: 5,
       shadowBlur: 8,
       shadowColor: 'rgba(97, 164, 255, 0.3)'
     },
