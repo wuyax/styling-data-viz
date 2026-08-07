@@ -10,9 +10,11 @@ export interface AriaStripeDecalOptions {
   show?: boolean;
   /** 
    * 条纹/纹理线条颜色。
-   * 💡【最佳实践】：若 itemStyle 设置了 LinearGradient 渐变，强烈建议保持 color 为 undefined (不传该参数)，
-   * ECharts 将自动继承 itemStyle 的渐变色，实现斜条纹跟随柱体/面积一起渐变的高质感效果。
-   * 若 itemStyle 没有设置渐变 (单色场景)，则可显式传递 color 参数 (如 'rgba(255, 255, 255, 0.85)') 提升对比表达。
+   * 💡【最佳实践】：
+   * 1. 若 itemStyle 设置了 LinearGradient 渐变，强烈建议保持 color 为 undefined (不传该参数)，
+   *    ECharts 将自动继承 itemStyle 的渐变色，实现斜条纹跟随柱体/面积一起渐变的高质感效果。
+   * 2. 若 itemStyle 为单色场景，必须传递与【系列同色调】的颜色 (如 'rgba(18, 173, 253, 0.85)')。
+   * ⚠️【严禁】：绝对禁止使用纯白色 (如 'rgba(255, 255, 255, 0.85)') 作为条纹颜色，否则会产生突兀刺眼的纯白网格切割感。
    */
   color?: string;
   /** 背景填充颜色 (默认 'none'，背景透明以透出底层渐变) */
@@ -46,7 +48,7 @@ export interface AriaStripeDecalOptions {
  * ```typescript
  * import { createAriaStripeDecal } from './references/ariaStripeDecal';
  *
- * // 1. itemStyle 为渐变色时：不传 color，条纹自动跟随 itemStyle 渐变，gap 默认为 [4, 6]
+ * // 1. itemStyle 为渐变色时：不传 color，条纹自动跟随 itemStyle 渐变色，gap 默认为 [4, 6]
  * option = {
  *   aria: createAriaStripeDecal({
  *     rotation: -45
@@ -60,10 +62,10 @@ export interface AriaStripeDecalOptions {
  *   }]
  * };
  *
- * // 2. itemStyle 为单色时：可传递高亮 color 增强表达
+ * // 2. itemStyle 为单色时：必须传递与系列同色调的颜色，严禁使用纯白色
  * option = {
  *   aria: createAriaStripeDecal({
- *     color: 'rgba(255, 255, 255, 0.85)',
+ *     color: 'rgba(18, 173, 253, 0.85)', // 传递与系列主色同调的颜色
  *     gap: [2, 6]
  *   })
  * };

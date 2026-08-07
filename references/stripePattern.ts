@@ -21,7 +21,7 @@ export interface StripePatternOptions {
  */
 export const createStripePattern = (options: StripePatternOptions) => {
   const {
-    mainColor = 'rgba(255, 255, 255, 0.35)',
+    mainColor = 'rgba(18, 173, 253, 0.4)', // 💡 必须传入与系列主色同调的颜色，严禁使用纯白色 'rgba(255,255,255,...)'
     bgColor = 'transparent',
     angle = 45,
     density = 'dense',

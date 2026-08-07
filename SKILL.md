@@ -73,7 +73,7 @@ flowchart TD
 // ✅ 正确规范：透明融入背景、渐变光晕衰减、高 Alpha 渐变描边、超淡降噪网格
 {
   backgroundColor: 'transparent',
-  aria: createAriaStripeDecal({ color: 'rgba(255, 255, 255, 0.9)', gap: [2, 6] }),
+  aria: createAriaStripeDecal({ rotation: -45 }), // 不传 color 自动继承 itemStyle 渐变色，gap 默认为 [4, 6]
   yAxis: { splitLine: { lineStyle: { color: 'rgba(255, 255, 255, 0.05)' } } },
   series: [{
     type: 'bar',
@@ -130,6 +130,7 @@ flowchart TD
   1. **斜条纹必带描边**：使用斜条纹时**必须同时配置 `borderWidth: 1 ~ 1.5` 的显式描边**，防止外轮廓发虚失焦。
   2. **边框渐变与高 Alpha**：若 `itemStyle.color` 为 `LinearGradient` 渐变填充，`borderColor` **也必须同步配置 `LinearGradient` 渐变**，且边框 Alpha 不透明度**必须显著高于填充色**（如边框 Alpha 0.8~1.0 vs 填充 Alpha 0.15~0.65），打造高发光轮廓切面。
   3. **条纹跟随渐变法则**：当 `itemStyle` 为渐变填充时，`createAriaStripeDecal({...})` **严禁显式传递 `color` 参数**（保持 `color: undefined`），使斜条纹自动继承 `itemStyle` 的渐变色；不传 `color` 时 `gap` 默认设为 `[4, 6]`（线宽 4, 间距 6）为最佳视角。
+  4. **严禁纯白条纹**：绝对禁止使用纯白色（如 `rgba(255, 255, 255, 0.85)`）作为斜条纹颜色。白色条纹会在暗色大屏中产生刺眼白刺与假网格浮层。单色场景下必须传递与**系列同色调的颜色**（如 `rgba(18, 173, 253, 0.85)`）；渐变场景下保持 `color: undefined` 自动继承渐变。
 - **实现方案与优先级**：
   - **优先推荐 (Priority 1 - 单图层原生贴花)**：直接使用 ECharts 5+ 原生 `aria: createAriaStripeDecal(...)`，在单一 `series` 内同时享受 `itemStyle.color` 的渐变发光与贴花纹理（详见 [`references/ariaStripeDecal.ts`](references/ariaStripeDecal.ts)）。
   - **备选方案 (Priority 2 - 双图层 Pattern 重叠)**：使用底层渐变 + 顶层 `barGap: '-100%'` 的 `createStripePattern` 遮罩层（详见 [`rules/general/stripe-texture-and-gradients.md`](rules/general/stripe-texture-and-gradients.md) 与 [`references/stripePattern.ts`](references/stripePattern.ts)）。
@@ -147,6 +148,7 @@ flowchart TD
 | "环境中没有 `D-DIN` 字体，直接使用默认系统字体" | 关键数字必须配置字体回退栈 `'D-DIN, DINPro-Medium, monospace'` 并设置 `font-feature-settings: "tnum"`。 |
 | "边框使用纯单色描边，或没有设置边框" | 斜条纹图表必须配置显式边框，且填充为渐变时边框必须配置同调性 `LinearGradient` 且 Alpha 透明度显著高于填充色。 |
 | "为了让柱体顶部更柔和，设置 `borderRadius: [4, 4, 0, 0]` 大圆角" | 柱状图必须保持大屏硬朗几何切割。不建议使用圆角；若需微弱边缘软化，绝对严禁大圆角，`borderRadius` 最大仅允许设为 `1`（推荐设为 `0` 或不设）。 |
+| "给斜条纹设置纯白色 `color: 'rgba(255, 255, 255, 0.85)'` 更加醒目" | 纯白条纹会破坏全屏调色盘统一感产生杂乱白刺。渐变场景绝对不传 `color` 继承渐变，单色场景必须传递与系列主色同调的颜色。 |
 | "容器尺寸似乎是固定的，不需要绑定 ResizeObserver" | 绝不能假设大屏尺寸不变，所有图表必须开启 `containLabel: true` 并防抖监听 resize。 |
 | "所有图表都强制加上斜条纹双图层" | 斜条纹属于高级可选增强方案，优先使用单图层 `aria.decal`，且 5 系列以上密集图表严禁使用，避免画面杂乱。 |
 | "为了展现科技感，把单图表入场动画设为 3s~5s 或齐刷刷无 delay 弹出" | 首屏入场必须控制在 `1.5s` 内（推荐 `animationDuration: 800ms`）并带交错 delay，避免全屏拖沓阻塞；常态低频呼吸（3s~6s）仅在入场完成后作用于重点节点。 |
