@@ -73,7 +73,7 @@ export const getHuanziSmoothLineOption = (data = {
 export const getHuanziBarOption = (data = {
   categories: ['咸阳市', '渭南市', '安康市', '汉中市', '榆林市'],
   seriesData: [80, 42, 38, 20, 12]
-}) => ({
+}): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',
@@ -131,15 +131,15 @@ export const getHuanziRingKpiOption = (title = '计算节点', value = '156,234'
   { name: '25-50mm', value: 20 },
   { name: '50-100mm', value: 15 },
   { name: '100mm以上', value: 5 }
-]) => ({
+]): EChartsOption => ({
   backgroundColor: 'transparent',
   title: {
     text: value,
     subtext: title,
-    x: 'center',
-    y: '40%',
+    left: 'center',
+    top: '40%',
     textStyle: { color: '#ffffff', fontSize: 26, fontWeight: 'bold', fontFamily: 'DINPro-Medium' },
-    subTextStyle: { color: '#61a4ff', fontSize: 13 }
+    subtextStyle: { color: '#61a4ff', fontSize: 13 }
   },
   tooltip: {
     trigger: 'item',

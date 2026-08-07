@@ -42,7 +42,7 @@ export const getHuanziTriangleBarOption = (data = {
     barWidth: '35%',
     itemStyle: {
       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-        { offset: 0, cotonglor: '#d8a6ff' },
+        { offset: 0, color: '#d8a6ff' },
         { offset: 0.6, color: '#7c95ff' },
         { offset: 1, color: '#61a4ff' }
       ]),

@@ -132,10 +132,10 @@ export const getDoughnutKpiOption = (title = '核心负载', value = '78.5%', li
   title: {
     text: value,
     subtext: title,
-    x: 'center',
-    y: '42%',
+    left: 'center',
+    top: '42%',
     textStyle: { color: '#f0f0f0', fontSize: 26, fontWeight: 'bold', fontFamily: 'D-DIN Bold' },
-    subTextStyle: { color: '#8299b1', fontSize: 13 }
+    subtextStyle: { color: '#8299b1', fontSize: 13 }
   },
   tooltip: {
     trigger: 'item',

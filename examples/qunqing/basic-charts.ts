@@ -71,7 +71,7 @@ export const getSmoothLineOption = (data = {
 export const getCapsuleBarOption = (data = {
   categories: ['全华东', '华南区', '华北区', '西南区', '西北区'],
   seriesData: [850, 720, 560, 430, 310]
-}) => ({
+}): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',
@@ -127,15 +127,15 @@ export const getDoughnutKpiOption = (title = '核心负载', value = '78.5%', li
   { name: '云计算', value: 28.8 },
   { name: '大数据', value: 26.8 },
   { name: '物联网', value: 15.8 }
-]) => ({
+]): EChartsOption => ({
   backgroundColor: 'transparent',
   title: {
     text: value,
     subtext: title,
-    x: 'center',
-    y: '42%',
+    left: 'center',
+    top: '42%',
     textStyle: { color: '#f0f0f0', fontSize: 26, fontWeight: 'bold', fontFamily: 'D-DIN Bold' },
-    subTextStyle: { color: '#8299b1', fontSize: 13 }
+    subtextStyle: { color: '#8299b1', fontSize: 13 }
   },
   tooltip: {
     trigger: 'item',

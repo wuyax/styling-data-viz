@@ -73,7 +73,7 @@ export const getGuofengSmoothLineOption = (data = {
 export const getGuofengBarOption = (data = {
   categories: ['产品一', '产品二', '产品三', '产品四'],
   seriesData: [89840, 19848, 9848, 8848]
-}) => ({
+}): EChartsOption => ({
   backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',
@@ -130,15 +130,15 @@ export const getGuofengKpiRingOption = (title = '发放率', value = '11%', list
   { name: '医疗健康', value: 16.8 },
   { name: '生态环境', value: 15.66 },
   { name: '文化旅游', value: 13.2 }
-]) => ({
+]): EChartsOption => ({
   backgroundColor: 'transparent',
   title: {
     text: value,
     subtext: title,
-    x: 'center',
-    y: '42%',
+    left: 'center',
+    top: '42%',
     textStyle: { color: '#eef4f0', fontSize: 28, fontWeight: 'bold', fontFamily: 'D-DIN Bold' },
-    subTextStyle: { color: '#76b5a6', fontSize: 13 }
+    subtextStyle: { color: '#76b5a6', fontSize: 13 }
   },
   tooltip: {
     trigger: 'item',

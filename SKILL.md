@@ -144,6 +144,7 @@ flowchart TD
 | "边框使用纯单色描边，或没有设置边框" | 斜条纹图表必须配置显式边框，且填充为渐变时边框必须配置同调性 `LinearGradient` 且 Alpha 透明度显著高于填充色。 |
 | "容器尺寸似乎是固定的，不需要绑定 ResizeObserver" | 绝不能假设大屏尺寸不变，所有图表必须开启 `containLabel: true` 并防抖监听 resize。 |
 | "所有图表都强制加上斜条纹双图层" | 斜条纹属于高级可选增强方案，优先使用单图层 `aria.decal`，且 5 系列以上密集图表严禁使用，避免画面杂乱。 |
+| "为了展现科技感，把单图表入场动画设为 3s~5s 或齐刷刷无 delay 弹出" | 首屏入场必须控制在 `1.5s` 内（推荐 `animationDuration: 800ms`）并带交错 delay，避免全屏拖沓阻塞；常态低频呼吸（3s~6s）仅在入场完成后作用于重点节点。 |
 
 ---
 
@@ -161,6 +162,7 @@ flowchart TD
   - **通用规范 (`rules/general/`)**：
     - `stripe-texture-and-gradients.md` —— 斜条纹与渐变质感规范
     - `echarts-spec.md` —— ECharts 5 / 6+ 配置项最佳实践
+    - `animation-and-rhythm.md` —— 动画与视觉节奏规范 (入场 $\le$ 1.5s~2s、交错算法与常态微动)
     - `layout-and-responsive.md` —— ResizeObserver 容器自适应与 Vue 3 集成范例
     - `anti-patterns.md` —— 踩坑反模式与自动修复指南
   - **风格细则 (`rules/styles/`)**：
@@ -184,3 +186,5 @@ flowchart TD
 - [ ] **轴线降噪**：顶部与右侧坐标轴已关闭（`show: false`），横向网格透明度低于 `5%`。
 - [ ] **等宽数字**：关键 KPI 及轴线数字包含 `fontFamily: 'D-DIN, DINPro-Medium, monospace'`。
 - [ ] **容器自适应**：图表绑定了 `ResizeObserver` 防抖 resize，且开启 `containLabel: true`。
+- [ ] **动画与节奏**：单图表入场控制在 1.5s 内（推荐 `animationDuration: 800ms`，交错 `animationDelay`），数据更新 400~600ms 敏捷响应，常态呼吸维持低频（3s~6s），避免全屏拖沓。
+
