@@ -50,14 +50,21 @@ styling-data-viz/
 │       ├── qunqing-theme.json       # 「群青」 Theme Builder 文件
 │       ├── guofeng-theme.json       # 「国风」 Theme Builder 文件
 │       └── huanzi-theme.json       # 「幻紫」 Theme Builder 文件
-├── rules/                           # 详细细则指南
-│   ├── general/                     # 通用规范 (通用 ECharts 配置、饼图环形图、斜纹渐变、响应式、动画、避坑)
-│   │   ├── pie-and-donut-spec.md
-│   │   ├── stripe-texture-and-gradients.md
-│   │   ├── echarts-spec.md
-│   │   ├── animation-and-rhythm.md
-│   │   ├── layout-and-responsive.md
-│   │   └── anti-patterns.md
+├── rules/                           # 详细细则指南 (解耦架构)
+│   ├── universal/                   # 【通用规则】所有图表均须遵循的基线规范
+│   │   ├── baseline-spec.md         # 容器透明、轴线降噪、网格控制、毛玻璃 Tooltip
+│   │   ├── typography-and-numbers.md# D-DIN 等宽数字、字阶与状态文字
+│   │   ├── stripe-texture-and-gradients.md # 斜条纹贴花与渐变质感
+│   │   ├── animation-and-rhythm.md  # 1.5s 入场交错与常态低频微动
+│   │   ├── layout-and-responsive.md # ResizeObserver 容器自适应
+│   │   └── anti-patterns.md         # 通用避坑与反模式检测
+│   ├── charts/                      # 【类型图表特有规则】按类型精准约束
+│   │   ├── bar-spec.md              # 柱状图硬朗直角 borderRadius: 0 与象形柱
+│   │   ├── pie-and-donut-spec.md    # 饼环图物理开裂、微倒角、双轨与 centerX 联动
+│   │   ├── line-and-area-spec.md    # 折线图 smooth 曲线、隐藏节点与云雾面积
+│   │   ├── combo-dual-axis-spec.md  # 双轴图单侧网格独占规则
+│   │   ├── gauge-spec.md            # 仪表盘无针化进度条与刻度盘
+│   │   └── map-and-flyline-spec.md  # 地图发光陆块与迁徙飞线
 │   └── styles/                      # 各设计风格专属细则
 │       ├── index.md                 # 风格矩阵与路由指引
 │       ├── qunqing.md               # 「群青」科技暗蓝色彩与字体规范

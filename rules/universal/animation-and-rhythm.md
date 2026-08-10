@@ -1,4 +1,4 @@
-# ECharts 动画与视觉节奏规范 (Animation & Rhythm Spec)
+# ECharts 动画与视觉节奏规范 (Universal Animation & Rhythm Spec)
 
 本文件规定大屏 ECharts 5 / 6+ 图表渲染动画的时长控制、物理缓动曲线、交错序列算法与常态微动呼吸规则。
 
@@ -26,22 +26,13 @@ animation: true,
 animationDuration: 800,        // 主入场时长 800ms
 animationEasing: 'cubicOut',   // 减速缓降曲线，收尾干练
 animationDelay: function (idx) {
-  return idx * 35;             // 紧凑型微交错，10项仅增加 350ms，整体控制在 1.2s 内
-}
-```
-
-### 二维矩阵 / 热力图交错算法
-```javascript
-animationDelay: function (idx) {
-  const row = Math.floor(idx / 5);
-  const col = idx % 5;
-  return (row + col) * 30;     // 曼哈顿几何扩散延时
+  return idx * 35;             // 紧凑型微交错，10项仅增加 350ms
 }
 ```
 
 ### 推荐物理缓动曲线
 * **`cubicOut`**：默认推荐，极度平滑的减速曲线，稳重不张扬。
-* **`backOut`**：带微弱冲过回弹效果，适用于机械柱图、仪表盘指针，具备物理机械质感。
+* **`backOut`**：带微弱冲过回弹效果，适用于机械柱图、仪表盘指针。
 * **`elasticOut`**：带有阻尼弹性，适用于环形图/气泡图的高亮节点。
 
 ---
@@ -65,26 +56,3 @@ animationDelay: function (idx) {
   itemStyle: { color: '#00f0ff', shadowBlur: 10, shadowColor: '#00f0ff' }
 }
 ```
-
-### 轨迹流光飞线 (Effect Line Trails)
-```javascript
-{
-  type: 'lines',
-  effect: {
-    show: true,
-    period: 5,                  // 流光穿梭周期 5 秒
-    trailLength: 0.6,           // 尾迹占比
-    symbol: 'arrow',
-    symbolSize: 5
-  }
-}
-```
-
----
-
-## 4. 动画避坑红线 (Animation Anti-Patterns)
-
-* **单图表入场拖沓（> 1.5s）**：在 6-8 个图表的大屏中，单个图表入场超过 1.5 秒会导致全屏拖拉阻塞。
-* **齐刷刷同时弹起**：未配置 `animationDelay`，产生廉价机械拉伸感。
-* **高频闪烁抖动**：常态微动周期低于 `1.5s`，产生视觉噪音，违反高数据墨水比原则。
-* **辅助元素施加动画**：网格线、图例、坐标轴做强烈动画。动画必须聚焦在**核心数据变化**上。
