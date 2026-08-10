@@ -4,7 +4,7 @@
 
 ---
 
-## 🎨 八大高级感与避坑原则
+## 八大高级感与避坑原则
 
 ### 1. 布局与坐标联动原则 (Unified CenterX & Responsive Layout)
 - **避免光晕与标题偏离 (Bug 3 & 4 修复)**：
@@ -12,14 +12,14 @@
   - **关键：`title.left` 与 `graphic.position` 必须强制联动设为相同的 `centerX`（如 `'32%'`）**，绝对不能留默认的 Canvas 中心 `'50%'`，否则光晕和标题会严重右偏。
 - **动态防重叠半径 (Radius Scaling)**：
   - 无图例时：`radius: ['60%', '71%']`, `center: ['50%', '50%']`；
-  - **有右侧图例时**：`radius` 必须等比收缩至 **`['44%', '55%']`**，`center: ['32%', '50%']`，确保右侧留出 35%~40% 的安全宽度防止碰撞。
+  - **有右侧图例时**：`radius` 必须等比收缩至 **`['44%', '55%']`** 或 **`['54%', '65%']`**，`center: ['32%', '50%']`，确保右侧留出 35%~40% 的安全宽度防止碰撞。
 
 ### 2. 双同心轨迹线与无遮挡透出 (Exposed Double Track Rings)
 - **避免背景线被饼图遮盖 (Bug 1 修复)**：
   - 底层暗轨**严禁**与主切片半径重合。推荐使用**“内外双极微同心线”**：
-    * **内同心轨迹线**：`radius: ['55%', '55.5%']`，`color: 'rgba(18, 173, 253, 0.2)'`；
-    * **外同心轨迹线**：`radius: ['71.5%', '72%']`，`color: 'rgba(18, 173, 253, 0.2)'`；
-  - 主切片位于 `['57%', '70%']` 中间，切片物理断开处完美露出内外双同心线，立体空间感极强。
+    * **内同心轨迹线**：`radius: ['52%', '52.5%']`，`color: 'rgba(18, 173, 253, 0.25)'`；
+    * **外同心轨迹线**：`radius: ['66.5%', '67%']`，`color: 'rgba(18, 173, 253, 0.25)'`；
+  - 主切片位于 `['54%', '65%']` 中间，切片物理断开处完美露出内外双同心线，立体空间感极强。
 
 ### 3. 工业级密集刻度盘 (Industrial Gauge Ticks Ring)
 - **增加刻度硬朗感 (Bug 2 修复)**：
@@ -28,7 +28,7 @@
 
 ### 4. 极微倒角与精细环厚 (Micro Radius & Thin Ring)
 - **物理断开 (Pad Angle)**：扇区切片**强制 `padAngle: 5 ~ 8`**。
-- **极微倒角 (Micro Radius)**：切面硬性控制为 **`borderRadius: 1 ~ 3`（推荐 `2`）**，严禁过大圆角导致端点膨胀变为药丸头。
+- **极微倒角 (Micro Radius)**：切面硬性控制为 **`borderRadius: 1 ~ 3`（推荐 `2`）**，严禁过大圆角（$\ge 4$）导致端点膨胀变为药丸头。
 - **精致环厚 (Ring Thickness)**：外径与内径差值控制在 **`10% ~ 12%`**。
 
 ### 5. 中心玻璃质感底罩 (Glassmorphic Center Base)
@@ -36,6 +36,9 @@
 
 ### 6. 三层结构化引导标签 (3-Tier Rich Format Labels)
 - 引导线采用极简 L 型/折线；标签配置 `{title|指标名称}\n{percent|百分比%} {val|绝对数值}`。
+
+### 7. 动态交互与悬停高亮
+- 配置 `hoverAnimation: true` 与 `hoverOffset: 6`，悬停时微弱外扩提升交互感。
 
 ### 8. 左右布局绝对防重叠通用计算器 (computePieLegendLayout)
 为了在任意容器宽度、字数下确保 Pie 与 Legend 左右布局绝对不碰撞、不偏离，使用通用几何空间划界与半径倒推算法：
@@ -46,7 +49,7 @@
 
 ---
 
-## 💻 完整无 Bug 终极 ECharts 配置范例
+## 完整无 Bug 终极 ECharts 配置范例
 
 ```javascript
 import * as echarts from 'echarts';
@@ -59,7 +62,7 @@ export function getPremiumDonutOption(data) {
     { value: 13.0, name: '异构加速卡' }
   ];
 
-  // 🌟 统一中心 X 坐标变量 (关键：防止各图层中心错位偏离)
+  // 统一中心 X 坐标变量 (关键：防止各图层中心错位偏离)
   const hasLegend = true;
   const centerX = hasLegend ? '32%' : '50%';
   const legendNames = businessData.map(d => d.name);
@@ -70,7 +73,7 @@ export function getPremiumDonutOption(data) {
     // 1. 结构化右侧图例 (显式声明 data 防止辅助层污染)
     legend: {
       show: hasLegend,
-      data: legendNames, // 🌟 只过滤真实业务名称，屏蔽 Ticks / Track
+      data: legendNames, // 只过滤真实业务名称，屏蔽 Ticks / Track
       orient: 'vertical',
       right: '6%',
       top: 'center',
@@ -108,7 +111,7 @@ export function getPremiumDonutOption(data) {
     // 2. 中心标题与数值 (left 与 centerX 保持高度联动)
     title: {
       text: '88.4%\n{sub|集群负载}',
-      left: centerX, // 🌟 联动统一中心
+      left: centerX, // 联动统一中心
       top: '44%',
       textAlign: 'center',
       textStyle: {
@@ -134,7 +137,7 @@ export function getPremiumDonutOption(data) {
         {
           type: 'circle',
           shape: { cx: 0, cy: 0, r: 56 },
-          position: [centerX, '50%'], // 🌟 联动统一中心，彻底解决右偏 Bug
+          position: [centerX, '50%'], // 联动统一中心，彻底解决右偏 Bug
           style: {
             fill: new echarts.graphic.RadialGradient(0.5, 0.5, 0.5, [
               { offset: 0, color: 'rgba(18, 173, 253, 0.28)' },
@@ -177,16 +180,16 @@ export function getPremiumDonutOption(data) {
         center: [centerX, '50%'],
         startAngle: 0,
         endAngle: 360,
-        splitNumber: 60, // 🌟 刻度更密集
+        splitNumber: 60, // 刻度更密集
         axisLine: { show: false },
         splitLine: { show: false },
         axisLabel: { show: false },
         axisTick: {
           show: true,
-          length: 8, // 🌟 增长刻度厚度
+          length: 8, // 增长刻度厚度
           lineStyle: {
             color: 'rgba(18, 173, 253, 0.45)',
-            width: 1.5 // 🌟 加粗刻度线
+            width: 1.5 // 加粗刻度线
           }
         },
         pointer: { show: false },
@@ -197,8 +200,11 @@ export function getPremiumDonutOption(data) {
       {
         name: 'MainPie',
         type: 'pie',
+        radius: ['54%', '65%'],
+        center: [centerX, '50%'],
+        padAngle: 6,
         itemStyle: {
-          borderRadius: 2 // 🌟 极微倒角
+          borderRadius: 2 // 极微倒角 (推荐 2, 严禁 >=4)
         },
         label: { show: false },
         data: businessData.map((d, index) => {
@@ -229,11 +235,11 @@ export function getPremiumDonutOption(data) {
 
 ---
 
-## 🛠️ 响应式计算器代码范例
+## 响应式计算器代码范例
 
 ```javascript
 /**
- * 🌟 饼图与图例左右防重叠通用响应式计算器
+ * 饼图与图例左右防重叠通用响应式计算器
  */
 export function computePieLegendLayout(containerWidth, containerHeight, hasLegend = true) {
   if (!hasLegend || containerWidth < 360) {
