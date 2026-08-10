@@ -37,8 +37,12 @@
 ### 6. 三层结构化引导标签 (3-Tier Rich Format Labels)
 - 引导线采用极简 L 型/折线；标签配置 `{title|指标名称}\n{percent|百分比%} {val|绝对数值}`。
 
-### 7. 高级感结构化右侧图例 (Precision Legend Spec)
-- 配置 `icon: 'rect'`, `itemWidth: 10`, `itemHeight: 10`；利用 `formatter` 实现 `[名称] + [大号等宽百分比]` 严格列对齐。
+### 8. 左右布局绝对防重叠通用计算器 (computePieLegendLayout)
+为了在任意容器宽度、字数下确保 Pie 与 Legend 左右布局绝对不碰撞、不偏离，使用通用几何空间划界与半径倒推算法：
+- **空间划界**：将容器划分为左侧 Pie 空间盒 ($W_{\text{pie\_ratio}} = 55\% \sim 62\%$) 与右侧 Legend 空间盒 ($1 - W_{\text{pie\_ratio}}$)；
+- **文本截断**：Legend Rich `name` 设置 `width: 80 ~ 90` 与 `overflow: 'truncate'`，防止文本无限制撑大；
+- **统一坐标绑定**：导出统一 `centerX` 变量同时赋值给 `pie.center[0]`, `title.left`, `graphic.position[0]`；
+- **响应式降级**：容器宽度 $< 360\text{px}$ 时降级为上下布局或仅保留 Center Title。
 
 ---
 
@@ -189,77 +193,77 @@ export function getPremiumDonutOption(data) {
         detail: { show: false }
       },
 
-      // 7. 主数据环形图 (防碰撞缩放半径 + 极微倒角 + 扇区断开)
+      // 7. 主数据环形图 (防重叠缩放半径 + 极微倒角 + 扇区断开)
       {
         name: 'MainPie',
         type: 'pie',
-        radius: hasLegend ? ['54%', '65%'] : ['60%', '71%'], // 🌟 有图例时收缩半径
-        center: [centerX, '50%'], // 🌟 向左偏移避开右侧 Legend
-        padAngle: 6, // 🌟 物理间隔
         itemStyle: {
-          show: true,
-          formatter: params => {
-            return `{title|${params.name}}\n{percent|${params.percent.toFixed(2)}%} {val|${params.value.toLocaleString()}}`;
-          },
-          rich: {
-            title: {
-              fontSize: 12,
-              color: 'rgba(205, 225, 248, 0.7)',
-              lineHeight: 18
-            },
-            percent: {
-              fontSize: 15,
-              fontWeight: 'bold',
-              color: '#00f0ff',
-              fontFamily: 'D-DIN, monospace',
-              lineHeight: 22
-            },
-            val: {
-              fontSize: 13,
-              fontWeight: 'bold',
-              color: '#ffffff',
-              fontFamily: 'D-DIN, monospace'
-            }
-          }
+          borderRadius: 2 // 🌟 极微倒角
         },
-        data: data || [
-          {
-            value: 23457,
-            name: '信息有误',
+        label: { show: false },
+        data: businessData.map((d, index) => {
+          const colors = [
+            ['#00f0ff', '#0072ff'],
+            ['#2b86ff', '#0c3cb7'],
+            ['#ffb400', '#ff5500'],
+            ['#00e676', '#00897b']
+          ];
+          const colorPair = colors[index % colors.length];
+          return {
+            ...d,
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                { offset: 0, color: '#00f0ff' },
-                { offset: 1, color: '#0072ff' }
+                { offset: 0, color: colorPair[0] },
+                { offset: 1, color: colorPair[1] }
               ]),
               shadowBlur: 10,
-              shadowColor: 'rgba(0, 240, 255, 0.4)'
+              shadowColor: `${colorPair[0]}66`
             }
-          },
-          {
-            value: 173847,
-            name: '重复申请',
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                { offset: 0, color: '#ffb400' },
-                { offset: 1, color: '#ff5500' }
-              ]),
-              shadowBlur: 10,
-              shadowColor: 'rgba(255, 180, 0, 0.4)'
-            }
-          },
-          {
-            value: 682828,
-            name: '信息不全',
-            itemStyle: {
-              color: new echarts.graphic.LinearGradient(0, 0, 1, 1, [
-                { offset: 0, color: '#2b86ff' },
-                { offset: 1, color: '#0c3cb7' }
-              ])
-            }
-          }
-        ]
+          };
+        })
       }
     ]
+  };
+}
+```
+
+---
+
+## 🛠️ 响应式计算器代码范例
+
+```javascript
+/**
+ * 🌟 饼图与图例左右防重叠通用响应式计算器
+ */
+export function computePieLegendLayout(containerWidth, containerHeight, hasLegend = true) {
+  if (!hasLegend || containerWidth < 360) {
+    return {
+      centerX: '50%',
+      centerY: containerWidth < 360 && hasLegend ? '38%' : '50%',
+      radius: ['55%', '68%'],
+      legendOrient: containerWidth < 360 ? 'horizontal' : 'vertical',
+      legendTop: containerWidth < 360 ? 'bottom' : 'center',
+      legendLeft: containerWidth < 360 ? 'center' : 'auto'
+    };
+  }
+
+  const isCompact = containerWidth < 450;
+  const pieRatio = isCompact ? 0.55 : 0.62;
+  const centerXPercent = (pieRatio / 2) * 100;
+  const centerX = `${centerXPercent.toFixed(1)}%`;
+
+  const pieAvailableWidth = containerWidth * pieRatio;
+  const maxSafeRadiusPx = Math.min(pieAvailableWidth, containerHeight) * 0.38;
+  const minDimension = Math.min(containerWidth, containerHeight);
+
+  const outerR = ((maxSafeRadiusPx / minDimension) * 100).toFixed(1);
+  const innerR = (outerR * 0.83).toFixed(1);
+
+  return {
+    centerX,
+    centerY: '50%',
+    radius: [`${innerR}%`, `${outerR}%`],
+    legendLeft: `${(pieRatio * 100).toFixed(1)}%`
   };
 }
 ```
