@@ -77,31 +77,31 @@ flowchart TD
 
 ### 一、 通用规则 (Universal Rules - 适用于所有图表)
 
-1. **容器背景透明融入 (`baseline-spec.md`)**：强制 `backgroundColor: 'transparent'`，无缝嵌入大屏玻璃卡片。
-2. **轴线降噪与超淡网格 (`baseline-spec.md`)**：关闭 Top/Right 轴线，隐藏 Y 轴线，横向网格 `3%~5%` 超淡虚线，禁用纵向网格。
-3. **等宽数字与字阶排版 (`typography-and-numbers.md`)**：关键 KPI 及数值强制使用 `D-DIN` / `DINPro-Medium` 与 `font-feature-settings: "tnum"`。
-4. **渐变衰减与斜条纹 (`stripe-texture-and-gradients.md`)**：填充必须配置 `LinearGradient`（顶部发光、底部衰减）；单柱/重点柱图推荐单图层 ARIA 斜条纹贴花（`createAriaStripeDecal`）。
-5. **动画与视觉节奏 (`animation-and-rhythm.md`)**：首屏入场 $\le 1.5\text{s}$（`cubicOut` + 基于索引的交错延时 `animationDelay`），数据更新 400~600ms，常态微动 3~6s。
-6. **容器动态自适应 (`layout-and-responsive.md`)**：强制开启 `containLabel: true`，绑定 `ResizeObserver` 防抖 resize。
+1. **容器背景透明融入 ([`rules/universal/baseline-spec.md`](rules/universal/baseline-spec.md))**：强制 `backgroundColor: 'transparent'`，无缝嵌入大屏玻璃卡片。
+2. **轴线降噪与超淡网格 ([`rules/universal/baseline-spec.md`](rules/universal/baseline-spec.md))**：关闭 Top/Right 轴线，隐藏 Y 轴线，横向网格 `3%~5%` 超淡虚线，禁用纵向网格。
+3. **等宽数字与字阶排版 ([`rules/universal/typography-and-numbers.md`](rules/universal/typography-and-numbers.md))**：关键 KPI 及数值强制使用 `D-DIN` / `DINPro-Medium` 与 `font-feature-settings: "tnum"`。
+4. **渐变衰减与斜条纹 ([`rules/universal/stripe-texture-and-gradients.md`](rules/universal/stripe-texture-and-gradients.md))**：填充必须配置 `LinearGradient`（顶部发光、底部衰减）；单柱/重点柱图推荐单图层 ARIA 斜条纹贴花（`createAriaStripeDecal`）。
+5. **动画与视觉节奏 ([`rules/universal/animation-and-rhythm.md`](rules/universal/animation-and-rhythm.md))**：首屏入场 $\le 1.5\text{s}$（`cubicOut` + 基于索引的交错延时 `animationDelay`），数据更新 400~600ms，常态微动 3~6s。
+6. **容器动态自适应 ([`rules/universal/layout-and-responsive.md`](rules/universal/layout-and-responsive.md))**：强制开启 `containLabel: true`，绑定 `ResizeObserver` 防抖 resize。
 
 ---
 
 ### 二、 类型图表特有规则 (Chart-Type-Specific Rules - 精准约束)
 
-1. **柱状图 / 象形柱图 (`rules/charts/bar-spec.md`)**：
+1. **柱状图 / 象形柱图 ([`rules/charts/bar-spec.md`](rules/charts/bar-spec.md))**：
    - 硬朗直角 `borderRadius: 0`（上限不得超过 `1`，**严禁 `[4,4,0,0]` 大圆角**）。
    - 5 系列以上密集柱图显式禁用斜条纹；赛博风配置 3D 三角柱（`pictorialBar` 锥形 path）。
-2. **饼图 / 环形图 (`rules/charts/pie-and-donut-spec.md`)**：
+2. **饼图 / 环形图 ([`rules/charts/pie-and-donut-spec.md`](rules/charts/pie-and-donut-spec.md))**：
    - 扇区 `padAngle: 5~8` 物理开裂与 `borderRadius: 1~3` 微倒角（**严禁 $\ge 4$ 大圆角**）。
    - 内外双同心轨迹线露缝穿透 + `GaugeTicks` 60 分段刻度盘 + 中心发光底罩。
    - 坐标中心与标题强制联动设为相同的 `centerX`（如 `'32%'`），彻底防止右偏。
-3. **折线图 / 面积图 (`rules/charts/line-and-area-spec.md`)**：
+3. **折线图 / 面积图 ([`rules/charts/line-and-area-spec.md`](rules/charts/line-and-area-spec.md))**：
    - `smooth: 0.35` 柔和曲线 + `showSymbol: false` 默认隐藏节点，`areaStyle` 叠加渐变云雾。
-4. **折柱混合双轴图 (`rules/charts/combo-dual-axis-spec.md`)**：
+4. **折柱混合双轴图 ([`rules/charts/combo-dual-axis-spec.md`](rules/charts/combo-dual-axis-spec.md))**：
    - 单侧网格独占法则：左 Y 轴独占 `splitLine`，右 Y 轴**绝对强制 `splitLine: { show: false }`**。
-5. **仪表盘 / 玉珏图 (`rules/charts/gauge-spec.md`)**：
+5. **仪表盘 / 玉珏图 ([`rules/charts/gauge-spec.md`](rules/charts/gauge-spec.md))**：
    - 现代无针化进度条（`pointer: { show: false }`） + 居中 D-DIN 大数字。
-6. **地图 / 迁徙飞线图 (`rules/charts/map-and-flyline-spec.md`)**：
+6. **地图 / 迁徙飞线图 ([`rules/charts/map-and-flyline-spec.md`](rules/charts/map-and-flyline-spec.md))**：
    - 暗色发光陆块 + 4~6s 低频巡航流光飞线 + 脉冲呼吸散点。
 
 ---
@@ -122,28 +122,28 @@ flowchart TD
 
 ## 目录与参考指南 (Directory & References)
 
-- **Skill 核心入口**：`SKILL.md`
-- **项目说明**：`README.md`
-- **静态参考与工具函数 (`references/`)**：
-  - `ariaStripeDecal.ts` —— **[优先推荐]** ECharts 5+ 原生 ARIA 单图层斜条纹贴花生成器
-  - `stripePattern.ts` —— 无缝科技斜条纹 Pattern 动态生成工具
-  - `themes/` —— 「群青」、「国风」、「幻紫」 ECharts 主题 JSON
-- **细则指南 (`rules/`)**：
-  - **通用规范 (`rules/universal/`)**：
-    - `baseline-spec.md` —— 通用图表基线配置规范 (透明底、轴线降噪、超淡网格、毛玻璃 Tooltip)
-    - `typography-and-numbers.md` —— 数字与排版规范 (D-DIN 等宽数字、字阶与状态文字)
-    - `stripe-texture-and-gradients.md` —— 斜条纹与渐变质感规范
-    - `animation-and-rhythm.md` —— 动画与视觉节奏规范 (1.5s 入场交错与常态微动)
-    - `layout-and-responsive.md` —— ResizeObserver 容器自适应范例
-    - `anti-patterns.md` —— 踩坑反模式与自动修复指南
-  - **类型图表特有规则 (`rules/charts/`)**：
-    - `bar-spec.md` —— 柱状图与象形柱图规范 (硬朗直角 borderRadius: 0、象形/3D三角柱)
-    - `pie-and-donut-spec.md` —— 饼图/环形图高级感配置规范 (扇区物理开裂、微倒角、内外双同心轨迹线、centerX 联动防偏离)
-    - `line-and-area-spec.md` —— 折线图与渐变面积图规范 (smooth 曲线、隐藏节点 showSymbol: false、渐变云雾)
-    - `combo-dual-axis-spec.md` —— 折柱混合双轴图规范 (单侧网格独占、右 Y 轴 splitLine: false)
-    - `gauge-spec.md` —— 仪表盘与水球图规范 (无针化进度条、GaugeTicks 刻度盘)
-    - `map-and-flyline-spec.md` —— 地图与迁徙飞线图规范 (发光陆块、低频巡航飞线)
-  - **风格细则 (`rules/styles/`)**：
-    - `qunqing.md` / `guofeng.md` / `huanzi.md` —— 三大设计风格专属调色盘与字体规范
-- **代码范例 (`examples/`)**：
-  - `examples/qunqing/` / `examples/guofeng/` / `examples/huanzi/` —— 对应风格的 TypeScript 代码范例
+- **Skill 核心入口**：[`SKILL.md`](SKILL.md)
+- **项目说明**：[`README.md`](README.md)
+- **静态参考与工具函数 ([`references/`](references/))**：
+  - [`references/ariaStripeDecal.ts`](references/ariaStripeDecal.ts) —— **[优先推荐]** ECharts 5+ 原生 ARIA 单图层斜条纹贴花生成器
+  - [`references/stripePattern.ts`](references/stripePattern.ts) —— 无缝科技斜条纹 Pattern 动态生成工具
+  - [`references/themes/`](references/themes/) —— 「群青」、「国风」、「幻紫」 ECharts 主题 JSON
+- **细则指南 ([`rules/`](rules/))**：
+  - **通用规范 ([`rules/universal/`](rules/universal/))**：
+    - [`rules/universal/baseline-spec.md`](rules/universal/baseline-spec.md) —— 通用图表基线配置规范 (透明底、轴线降噪、超淡网格、毛玻璃 Tooltip)
+    - [`rules/universal/typography-and-numbers.md`](rules/universal/typography-and-numbers.md) —— 数字与排版规范 (D-DIN 等宽数字、字阶与状态文字)
+    - [`rules/universal/stripe-texture-and-gradients.md`](rules/universal/stripe-texture-and-gradients.md) —— 斜条纹与渐变质感规范
+    - [`rules/universal/animation-and-rhythm.md`](rules/universal/animation-and-rhythm.md) —— 动画与视觉节奏规范 (1.5s 入场交错与常态微动)
+    - [`rules/universal/layout-and-responsive.md`](rules/universal/layout-and-responsive.md) —— ResizeObserver 容器自适应范例
+    - [`rules/universal/anti-patterns.md`](rules/universal/anti-patterns.md) —— 踩坑反模式与自动修复指南
+  - **类型图表特有规则 ([`rules/charts/`](rules/charts/))**：
+    - [`rules/charts/bar-spec.md`](rules/charts/bar-spec.md) —— 柱状图与象形柱图规范 (硬朗直角 borderRadius: 0、象形/3D三角柱)
+    - [`rules/charts/pie-and-donut-spec.md`](rules/charts/pie-and-donut-spec.md) —— 饼图/环形图高级感配置规范 (扇区物理开裂、微倒角、内外双同心轨迹线、centerX 联动防偏离)
+    - [`rules/charts/line-and-area-spec.md`](rules/charts/line-and-area-spec.md) —— 折线图与渐变面积图规范 (smooth 曲线、隐藏节点 showSymbol: false、渐变云雾)
+    - [`rules/charts/combo-dual-axis-spec.md`](rules/charts/combo-dual-axis-spec.md) —— 折柱混合双轴图规范 (单侧网格独占、右 Y 轴 splitLine: false)
+    - [`rules/charts/gauge-spec.md`](rules/charts/gauge-spec.md) —— 仪表盘与水球图规范 (无针化进度条、GaugeTicks 刻度盘)
+    - [`rules/charts/map-and-flyline-spec.md`](rules/charts/map-and-flyline-spec.md) —— 地图与迁徙飞线图规范 (发光陆块、低频巡航飞线)
+  - **风格细则 ([`rules/styles/`](rules/styles/))**：
+    - [`rules/styles/qunqing.md`](rules/styles/qunqing.md) / [`rules/styles/guofeng.md`](rules/styles/guofeng.md) / [`rules/styles/huanzi.md`](rules/styles/huanzi.md) —— 三大设计风格专属调色盘与字体规范
+- **代码范例 ([`examples/`](examples/))**：
+  - [`examples/qunqing/`](examples/qunqing/) / [`examples/guofeng/`](examples/guofeng/) / [`examples/huanzi/`](examples/huanzi/) —— 对应风格的 TypeScript 代码范例
