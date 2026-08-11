@@ -65,7 +65,7 @@ export function getComboDualAxisOption() {
         nameTextStyle: { color: '#8299b1', fontSize: 11 },
         axisLine: { show: false },
         axisLabel: { color: '#8299b1', fontSize: 12, fontFamily: 'D-DIN', formatter: '{value}%' },
-        // 关键：右 Y 轴绝对禁止开启网格线！
+        // 关键：右 Y 轴 splitLine.show 设为 false (单侧网格独占)
         splitLine: { show: false }
       }
     ],

@@ -7,13 +7,13 @@
 ## 1. 核心约束与避坑法则
 
 ### 1. 硬朗直角切面法则 (Strict Zero-Radius Spec)
-* **硬朗几何切面**：大屏柱状图默认必须保持硬朗直角（`borderRadius: 0`），以此呈现科技驾驶舱与机甲切面的硬朗质感。
-* **微边缘过渡上限**：若极端情况下需要微弱边缘软化，圆角上限**不得超过 `1`**（如 `borderRadius: [1, 1, 0, 0]`）。
-* **禁用大圆角**：**严禁使用 `borderRadius: [4, 4, 0, 0]`** 或更高弧度的胶囊/泡泡圆角，防止产生低龄塑料感。
+* **硬朗几何切面**：大屏柱状图默认保持硬朗直角（`borderRadius: 0`），呈现科技驾驶舱与机甲切面的切面质感。
+* **微边缘过渡上限**：若需要微弱边缘软化，圆角上限保持在 **`borderRadius ≤ 1`**（如 `borderRadius: [1, 1, 0, 0]`）。
+* **切面一致性**：统一保持直角或微倒角切面，维持工业级高质感。
 
 ### 2. 斜纹贴画与双图层适用判定
 * **单图层 ARIA 斜纹 (优先推荐)**：单柱/双柱重点图表推荐配置 `aria: createAriaStripeDecal({ rotation: -45 })`。不传 `color`，自动继承 `itemStyle` 的渐变填充。
-* **5 系列以上密集柱图显式禁用**：当 X 轴分类密集或系列数 $\ge 5$ 时，**禁止添加斜条纹**，防止视觉过载与杂乱干扰。
+* **密集柱图渐变策略**：当 X 轴分类密集或系列数 $\ge 5$ 时，采用无斜纹纯渐变填充，保持图形界面清晰通透。
 * **描边搭配铁律**：配置斜条纹时必须同时配置 `borderWidth: 1 ~ 1.5` 的显式描边，且 `borderColor` 的渐变 Alpha 不透明度须显著高于填充色。
 
 ### 3. 象形柱图与 3D 三角柱图 (Pictorial Bar Spec)
@@ -71,7 +71,7 @@ export function getTechBarOption() {
         type: 'bar',
         barWidth: '35%',
         itemStyle: {
-          borderRadius: 0, // 坚决保持硬朗直角
+          borderRadius: 0, // 硬朗直角切面
           borderWidth: 1.5,
           borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             { offset: 0, color: 'rgba(18, 173, 253, 1.0)' },

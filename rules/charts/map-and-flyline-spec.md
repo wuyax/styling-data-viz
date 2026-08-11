@@ -13,7 +13,7 @@
 
 ### 2. 迁徙流光飞线 (Flyline Trails Spec)
 * **低频平滑穿梭**：飞线动画周期控制在 `lines.effect.period: 4 ~ 6s`，尾迹占比 `trailLength: 0.5 ~ 0.6`。
-* **低饱和轨迹**：基础连线 `lineStyle.color` 保持极淡透明度（`rgba(18, 173, 253, 0.15)`），靠飞线头部点亮轨迹，严禁整条线刺眼死白。
+* **低饱和轨迹**：基础连线 `lineStyle.color` 保持极淡透明度（`rgba(18, 173, 253, 0.15)`），靠飞线头部点亮轨迹，保持高暗色发光对比度。
 
 ### 3. 脉冲呼吸散点 (Effect Scatter Spec)
 * 地图关键节点采用 `effectScatter` 叠加，`rippleEffect.period: 4` 低频扩散，散点大小控制在 `6 ~ 10px`。

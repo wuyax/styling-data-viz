@@ -52,12 +52,9 @@ styling-data-viz/
 │       └── huanzi-theme.json       # 「幻紫」 Theme Builder 文件
 ├── rules/                           # 详细细则指南 (解耦架构)
 │   ├── universal/                   # 【通用规则】所有图表均须遵循的基线规范
-│   │   ├── baseline-spec.md         # 容器透明、轴线降噪、网格控制、毛玻璃 Tooltip
-│   │   ├── typography-and-numbers.md# D-DIN 等宽数字、字阶与状态文字
+│   │   ├── baseline-spec.md         # 容器透明、轴线降噪、等宽排版、自适应与自检表
 │   │   ├── stripe-texture-and-gradients.md # 斜条纹贴花与渐变质感
-│   │   ├── animation-and-rhythm.md  # 1.5s 入场交错与常态低频微动
-│   │   ├── layout-and-responsive.md # ResizeObserver 容器自适应
-│   │   └── anti-patterns.md         # 通用避坑与反模式检测
+│   │   └── animation-and-rhythm.md  # 1.5s 入场交错与常态低频微动
 │   ├── charts/                      # 【类型图表特有规则】按类型精准约束
 │   │   ├── bar-spec.md              # 柱状图硬朗直角 borderRadius: 0 与象形柱
 │   │   ├── pie-and-donut-spec.md    # 饼环图物理开裂、微倒角、双轨与 centerX 联动

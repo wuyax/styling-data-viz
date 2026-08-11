@@ -1,38 +1,47 @@
-# 仪表盘、水球图与玉珏图规范 (Gauge, Liquid & Multi-Ring Spec)
+# 仪表盘、玉珏图与水球图规范 (Gauge, Multi-Ring & LiquidFill Spec)
 
-本文件规定大屏 ECharts 场景下，科技大屏仪表盘、水球图与赛博玉珏图的核心构建原则与排版约束。
-
----
-
-## 1. 核心约束与避坑法则
-
-### 1. 现代化无针仪表盘 (Needleless Tech Gauge)
-* **隐藏传统粗指针**：传统仪表盘粗大指针极其占用空间且审美陈旧。大屏仪表盘必须配置 **`pointer: { show: false }`**。
-* **渐变圆弧进度条**：使用 `progress` 开启圆弧进度填充（`width: 10 ~ 12`），配置 `LinearGradient` 渐变发光色。
-* **居中 KPI 数字与标题**：在仪表盘正中心（`detail` / `title`）展示 `D-DIN` 32px 大号百分比数值与次级说明文字。
-
-### 2. 刻度盘图层独立 (Gauge Ticks Sub-layer)
-* 可将 `GaugeTicks` 作为独立系列放置于环形图/仪表盘下方，配置 `splitNumber: 60`, `axisTick.length: 8`, `width: 1.5` 增强科技机械刻度质感。
-* **防图例污染**：任何使用 `gauge` 作为辅助刻度盘的场景，必须在 `legend.data` 中显式剔除 `GaugeTicks`。
-
-### 3. 玉珏图 / 多层嵌套发光环形图 (Multi-Ring Gauge)
-* 在「幻紫」赛博风格中，使用多层渐变发光圆弧层叠（电光蓝 `#61a4ff`、霓虹粉 `#d8a6ff`、暖亮金 `#ffde8d`），通过不同半径（`radius: ['80%', '85%']`, `['65%', '70%']`）呈现多维占比。
+本文件规定大屏 ECharts 场景下无针科技仪表盘 (Needleless Tech Gauge)、极坐标赛博玉珏图 (Polar Multi-Ring) 与水球图 (LiquidFill) 的核心构建原则、空间半径预算与完整配置代码。
 
 ---
 
-## 2. 完整无 Bug 配置代码范例
+## 1. 核心构建原则与空间预算 (Core Rules & Spatial Budget)
 
-```typescript
+### 1.1 无针弧形进度仪表盘 (Needleless Arc Progress)
+- **无针化视觉**：设置 `pointer: { show: false }`，彻底摒弃传统粗大指针，采用 `progress` 发光渐变圆弧表现进度。
+- **居中 KPI 数值栈 (Center KPI Stack)**：
+  - 数值 `detail` 使用 `D-DIN` 大号字体（28~34px），居中微调 `offsetCenter: [0, '-8%']`；
+  - 标题 `title` 位于数值下方 `offsetCenter: [0, '28%']`。
+- **空间半径与刻度防裁切预算 (Radius Budget)**：
+  - **关闭刻度文字 (`axisLabel: { show: false }`)**：`center: ['50%', '55%']`, `radius: '78%'`；
+  - **开启刻度文字 (`axisLabel: { show: true }`)**：刻度文字向外延伸 15px，`radius` 必须显式收缩至 **`68% ~ 70%`**，防止 0 与 100 刻度超出 Canvas 画布底部与侧边。
+
+### 1.2 极坐标赛博玉珏图 (Polar Multi-Ring Gauge)
+- 使用 `type: 'bar'` 配合 `coordinateSystem: 'polar'`（极坐标柱状图）或多 `series` 差异化 `radius` 实现多轨发光圆弧层叠。
+- 物理开裂：设置 `roundCap: true` 实现端点精致圆润。
+
+### 1.3 纯净化图例白名单 (Legend Whitelist)
+- 任何使用 `gauge` 辅助刻度盘（如 `GaugeTicks`）的场景，必须在 `legend.data` 中显式指定业务系列名称，隔离辅助刻度层。
+
+---
+
+## 2. 完整无 Bug 终极配置范例
+
+### 模式 A：科技无针弧形仪表盘 (Needleless Tech Gauge)
+
+```javascript
 import * as echarts from 'echarts';
 
-export function getTechGaugeOption(title = '系统健康度', value = 92.4) {
+export function getNeedlelessGaugeOption(title = '系统健康度', value = 92.4, showLabels = false) {
+  // 开启刻度文字时，半径必须压缩至 68% 防裁切
+  const radius = showLabels ? '68%' : '78%';
+
   return {
     backgroundColor: 'transparent',
     series: [
       {
         type: 'gauge',
         center: ['50%', '55%'],
-        radius: '80%',
+        radius: radius,
         startAngle: 210,
         endAngle: -30,
         min: 0,
@@ -43,28 +52,46 @@ export function getTechGaugeOption(title = '系统健康度', value = 92.4) {
           width: 10,
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-              { offset: 0, color: '#18db6c' },
-              { offset: 0.7, color: '#12adfd' },
+              { offset: 0, color: '#38ef7d' },
+              { offset: 0.7, color: '#00f2fe' },
               { offset: 1, color: '#a855f7' }
             ])
           }
         },
-        pointer: { show: false }, // 隐藏粗指针
+        pointer: { show: false }, // 无针化进度环
         axisLine: {
-          lineStyle: { width: 10, color: [[1, 'rgba(255, 255, 255, 0.08)']] }
+          lineStyle: {
+            width: 10,
+            color: [[1, 'rgba(205, 225, 248, 0.08)']]
+          }
         },
-        axisTick: { show: false },
-        splitLine: { show: false },
-        axisLabel: { show: false },
-        anchor: { show: false },
+        axisTick: {
+          show: true,
+          splitNumber: 5,
+          length: 4,
+          lineStyle: { color: 'rgba(205, 225, 248, 0.25)', width: 1 }
+        },
+        splitLine: {
+          show: true,
+          length: 8,
+          lineStyle: { color: 'rgba(205, 225, 248, 0.45)', width: 1.5 }
+        },
+        axisLabel: {
+          show: showLabels,
+          distance: 14,
+          color: '#8299b1',
+          fontSize: 11,
+          fontFamily: 'D-DIN, DINPro-Medium, monospace'
+        },
         title: {
-          offsetCenter: [0, '30%'],
+          show: true,
+          offsetCenter: [0, '28%'],
           color: '#8299b1',
           fontSize: 13
         },
         detail: {
           valueAnimation: true,
-          offsetCenter: [0, '-5%'],
+          offsetCenter: [0, '-8%'],
           fontSize: 32,
           fontWeight: 'bold',
           fontFamily: 'D-DIN, DINPro-Medium, monospace',
@@ -77,3 +104,111 @@ export function getTechGaugeOption(title = '系统健康度', value = 92.4) {
   };
 }
 ```
+
+### 模式 B：极坐标赛博玉珏图 (Polar Multi-Ring Arc Bar)
+
+```javascript
+export function getCyberMultiRingGaugeOption(data = [
+  { name: 'GPU 负载', value: 85, color: '#00f2fe' },
+  { name: '内存占用', value: 62, color: '#38ef7d' },
+  { name: '磁盘 I/O', value: 45, color: '#ffb400' }
+]) {
+  return {
+    backgroundColor: 'transparent',
+    angleAxis: {
+      max: 100,
+      startAngle: 225,
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { show: false },
+      splitLine: { show: false }
+    },
+    radiusAxis: {
+      type: 'category',
+      data: data.map(d => d.name),
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: { show: false }
+    },
+    polar: {
+      center: ['50%', '50%'],
+      radius: ['30%', '80%']
+    },
+    series: [
+      {
+        type: 'bar',
+        data: data.map(d => ({
+          value: d.value,
+          itemStyle: { color: d.color }
+        })),
+        coordinateSystem: 'polar',
+        roundCap: true,
+        barWidth: 10
+      }
+    ]
+  };
+}
+```
+
+### 模式 C：科技感水球图 (ECharts LiquidFill Spec)
+
+> [!NOTE]
+> 水球图需依赖 `echarts-liquidfill` 插件 (`type: 'liquidFill'`)。
+
+```javascript
+export function getTechLiquidFillOption(title = '水库蓄水量', value = 0.68) {
+  return {
+    backgroundColor: 'transparent',
+    title: {
+      text: title,
+      left: 'center',
+      bottom: '8%',
+      textStyle: {
+        color: '#8299b1',
+        fontSize: 13,
+        fontWeight: 'normal'
+      }
+    },
+    series: [
+      {
+        type: 'liquidFill',
+        radius: '72%',
+        center: ['50%', '45%'],
+        data: [value, value - 0.15], // 双重水波起伏
+        color: ['rgba(18, 173, 253, 0.85)', 'rgba(0, 242, 254, 0.45)'],
+        backgroundStyle: {
+          color: 'rgba(5, 14, 23, 0.6)',
+          borderWidth: 1,
+          borderColor: 'rgba(18, 173, 253, 0.25)'
+        },
+        outline: {
+          borderDistance: 4,
+          itemStyle: {
+            borderWidth: 2,
+            borderColor: '#00f2fe',
+            shadowBlur: 10,
+            shadowColor: 'rgba(0, 242, 254, 0.5)'
+          }
+        },
+        label: {
+          fontSize: 30,
+          fontFamily: 'D-DIN, DINPro-Medium, monospace',
+          fontWeight: 'bold',
+          color: '#ffffff',
+          insideColor: '#ffffff'
+        }
+      }
+    ]
+  };
+}
+```
+
+---
+
+## 3. Agent 规则自检清单 (Completion Criteria)
+
+编写或生成仪表盘配置前，必须完成以下核对：
+1. [ ] 仪表盘是否配置了 `pointer: { show: false }` 实现现代化无针进度环？
+2. [ ] 是否已核查 `axisLabel` 开启状态？若开启刻度文字，`radius` 是否已收缩至 `≤ 70%`？
+3. [ ] 居中 `detail` 与 `title` 的 `offsetCenter` 是否配置了适当的 Y 轴相对位移，防止与底端弧线错位？
+4. [ ] 若使用 `liquidFill` 水球图，`radius` 是否控制在 `72%` 以内并包含背景轨底座？
